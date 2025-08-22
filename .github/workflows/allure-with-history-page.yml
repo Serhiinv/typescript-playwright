@@ -59,7 +59,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: new-allure-report
-          path: ${{ env.REPORT_DIR }}
+          path: allure-reports
           retention-days: 7
 
   deploy-report:
