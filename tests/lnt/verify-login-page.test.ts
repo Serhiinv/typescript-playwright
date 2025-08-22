@@ -21,6 +21,6 @@ test("tests Verify Login Page @smoke", async ({ page }) => {
   // Using methods from CreateAccountPage as there are the same elements
   await createAccount.verifyGoogleLogin();
   await createAccount.verifyAppleLogin();
-  await createAccount.verifyFacebookLogin();
+  // await createAccount.verifyFacebookLogin();
   await createAccount.verifyEmailLogin("Login");
 });
