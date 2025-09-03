@@ -1,0 +1,3 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Wed Sep 03 19:01:19 UTC 2025","Wed Sep 03 19:01:30 UTC 2025","11651","chromium","","","","","tests Verify Create Account Page @smoke",""
+"passed","Wed Sep 03 19:01:32 UTC 2025","Wed Sep 03 19:01:41 UTC 2025","9100","chromium","","","","","tests Verify Login Page @smoke",""
