@@ -197,18 +197,22 @@ jobs:
           SUBJECT="Allure Report - ${{ github.workflow }} - ${{ github.ref_name }} - Passed:${{ steps.summary.outputs.passed }} Failed:${{ steps.summary.outputs.failed }}"
           BODY="Test run summary:<br>Passed: ${{ steps.summary.outputs.passed }}<br>Failed: ${{ steps.summary.outputs.failed }}<br>Open <a href=\"$REPORT_URL\">Report</a><br>See <a href=\"${WORKFLOW_RUNS}\">Workflow runs</a> for details"
 
+          cat <<EOF > payload.json
+          {
+            "personalizations": [{
+              "to": [{"email": "$RECIPIENTS"}],
+              "subject": "$SUBJECT"
+            }],
+            "from": {"email": "$SENDER"},
+            "content": [{
+              "type": "text/html",
+              "value": "$BODY"
+            }]
+          }
+          EOF
+
           curl --request POST \
             --url https://api.sendgrid.com/v3/mail/send \
             --header "Authorization: Bearer $SENDGRID_API_KEY" \
             --header 'Content-Type: application/json' \
-            --data '{
-              "personalizations": [{
-                "to": [{"email": "'"$RECIPIENTS"'"}],
-                "subject": "'"$SUBJECT"'"
-              }],
-              "from": {"email": "'"$SENDER"'"},
-              "content": [{
-                "type": "text/html",
-                "value": "'"$BODY"'"
-              }]
-            }'
+            --data @payload.json
