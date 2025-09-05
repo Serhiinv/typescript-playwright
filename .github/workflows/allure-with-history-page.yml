@@ -196,7 +196,7 @@ jobs:
         
         run: |
           SUBJECT="Allure Report - ${{ github.workflow }} - ${{ github.ref_name }} - Passed:${{ steps.summary.outputs.passed }} Failed:${{ steps.summary.outputs.failed }}"
-          BODY="Test run summary:\nPassed: ${{ steps.summary.outputs.passed }}\nFailed: ${{ steps.summary.outputs.failed }}\nReport: $REPORT_URL\n\nSee Workflow runs for details: $WORKFLOW_RUNS"
+          BODY="Test run summary:\nPassed: ${{ steps.summary.outputs.passed }}\nFailed: ${{ steps.summary.outputs.failed }}\nReport: $REPORT_URL\n\nSee Workflow runs for details: https://github.com/Serhiinv/typescript-playwright/actions/workflows/allure-with-history-page.yml"
 
           curl --request POST \
             --url https://api.sendgrid.com/v3/mail/send \
