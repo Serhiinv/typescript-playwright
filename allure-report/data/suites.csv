@@ -1,3 +1,3 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Fri Sep 05 21:22:07 UTC 2025","Fri Sep 05 21:22:16 UTC 2025","8616","chromium","","","","","tests Verify Create Account Page @smoke",""
-"passed","Fri Sep 05 21:22:18 UTC 2025","Fri Sep 05 21:22:25 UTC 2025","6647","chromium","","","","","tests Verify Login Page @smoke",""
+"failed","Fri Sep 05 21:27:00 UTC 2025","Fri Sep 05 21:27:12 UTC 2025","11658","chromium","","","","","tests Verify Login Page @smoke",""
+"passed","Fri Sep 05 21:26:39 UTC 2025","Fri Sep 05 21:26:47 UTC 2025","8436","chromium","","","","","tests Verify Create Account Page @smoke",""
