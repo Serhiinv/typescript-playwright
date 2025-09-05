@@ -1,0 +1,1 @@
+[{"uid":"6341b7b2f18dd5e8","name":"tests Verify Create Account Page @smoke","time":{"start":1757060508697,"stop":1757060516175,"duration":7478},"status":"passed","severity":"normal"},{"uid":"8e90c03db1de8741","name":"tests Verify Login Page @smoke","time":{"start":1757060517989,"stop":1757060524128,"duration":6139},"status":"passed","severity":"normal"}]
