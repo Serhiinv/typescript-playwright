@@ -193,28 +193,23 @@ jobs:
           SENDER: serhii.nv@gmail.com
           REPORT_URL: https://serhiinv.github.io/typescript-playwright/ # or workflow run URL / artifact link
           WORKFLOW_RUNS: https://github.com/Serhiinv/typescript-playwright/actions/workflows/allure-with-history-page.yml
+        
         run: |
           SUBJECT="Allure Report - ${{ github.workflow }} - ${{ github.ref_name }} - Passed:${{ steps.summary.outputs.passed }} Failed:${{ steps.summary.outputs.failed }}"
-          BODY="Test run summary:<br>Passed: ${{ steps.summary.outputs.passed }}<br>Failed: ${{ steps.summary.outputs.failed }}<br>Open <a href=\"$REPORT_URL\">Report</a><br>See <a href=\"${WORKFLOW_RUNS}\">Workflow runs</a> for details"
-
-          cat <<EOF > payload.json
-          {
-            "personalizations": [{
-              "to": [{"email": "$RECIPIENTS"}],
-              "subject": "$SUBJECT"
-            }],
-            "from": {"email": "$SENDER"},
-            "content": [{
-              "type": "text/html",
-              "value": "$BODY"
-            }]
-          }
-          EOF
-
-          cat payload.json
+          BODY="Test run summary:\nPassed: ${{ steps.summary.outputs.passed }}\nFailed: ${{ steps.summary.outputs.failed }}\nReport: $REPORT_URL\n\nSee Workflow runs for details: $WORKFLOW_RUNS"
 
           curl --request POST \
             --url https://api.sendgrid.com/v3/mail/send \
             --header "Authorization: Bearer $SENDGRID_API_KEY" \
             --header 'Content-Type: application/json' \
-            --data @payload.json
+            --data '{
+              "personalizations": [{
+                "to": [{"email": "'"$RECIPIENTS"'"}],
+                "subject": "'"$SUBJECT"'"
+              }],
+              "from": {"email": "'"$SENDER"'"},
+              "content": [{
+                "type": "text/plain",
+                "value": "'"$BODY"'"
+              }]
+            }'
