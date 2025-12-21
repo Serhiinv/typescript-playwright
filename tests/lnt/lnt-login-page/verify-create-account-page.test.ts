@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
-import { LNTCreateAccountPage } from "../../pages/lnt-pages/LNTCreateAccountPage";
-import { LNTHomePage } from "../../pages/lnt-pages/LNTHomePage";
-import { LNTHeaderMenuPage } from "../../pages/lnt-pages/LNTHeaderMenuPage";
+import { LNTCreateAccountPage } from "../../../page-object/lnt/lnt-pages/LNTCreateAccountPage";
+import { LNTHomePage } from "../../../page-object/lnt/lnt-pages/LNTHomePage";
+import { LNTHeaderMenuPage } from "../../../page-object/lnt/lnt-pages/LNTHeaderMenuPage";
 
 test("tests Verify Create Account Page @smoke", async ({ page }) => {
 

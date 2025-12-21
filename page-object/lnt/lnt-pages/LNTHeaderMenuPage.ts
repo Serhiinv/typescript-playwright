@@ -1,5 +1,7 @@
 import { Page } from '@playwright/test';
+import { logAllMethods, logger} from "../../../utils/logger";
 
+@logAllMethods
 export class LNTHeaderMenuPage {
   readonly page: Page;
 
@@ -9,6 +11,9 @@ export class LNTHeaderMenuPage {
 
   async logIn() {
     await this.page.locator('text=Log in').click();
+      const msg = 'Logger message check';
+      logger.step(msg);
+      logger.info(msg);
   }
 
   async createAccount() {
