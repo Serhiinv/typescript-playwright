@@ -9,6 +9,7 @@ export class LNTHeaderMenuPage {
 
   async logIn() {
     await this.page.locator('text=Log in').click();
+      const msg = 'Logger message check';
   }
 
   async createAccount() {
