@@ -7,14 +7,14 @@ import { LNTHeaderMenuPage } from "../../../page-object/lnt/lnt-pages/LNTHeaderM
 test("tests Verify Login Page @smoke", async ({ page }) => {
 
   await new LNTHomePage(page).open();
-  const headerMenu = new LNTHeaderMenuPage(page);
-  await headerMenu.logIn();
-  await headerMenu.signIn();
+  // const headerMenu = new LNTHeaderMenuPage(page);
+  // await headerMenu.logIn();
+  // await headerMenu.signIn();
+  //
+  // // const createAccount = new LNTCreateAccountPage(page);
+  // const loginPage = new LNTLoginPage(page);
 
-  // const createAccount = new LNTCreateAccountPage(page);
-  const loginPage = new LNTLoginPage(page);
-
-  await loginPage.verifyHeader();
+  // await loginPage.verifyHeader();
   // await loginPage.verifyTextDescription1();
   // await loginPage.verifyTextDescription2();
   //

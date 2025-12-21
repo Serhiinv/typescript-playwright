@@ -1,7 +1,5 @@
 import { expect, Page } from '@playwright/test';
-// import { logAllMethods, logger } from '@/utils/logger';
-//
-// @logAllMethods
+
 export class LNTLoginPage {
   readonly page: Page;
 
