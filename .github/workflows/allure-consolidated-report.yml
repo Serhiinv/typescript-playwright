@@ -11,8 +11,8 @@ on:
         type: choice
         options:
           - '@smoke'
-          - '@menu-main'
-          - '@menu-logged'
+          - '@lnt-menu-main'
+          - '@lnt-menu-logged'
 
 
 permissions:

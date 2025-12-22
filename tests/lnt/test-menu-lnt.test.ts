@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 import { Main } from '../../page-object/lnt/main';
 
-test('test menu lnt @menu-main', async ({ page }) => {
+test('test menu lnt @lnt-menu-main', async ({ page }) => {
     const m = new Main(page);
     await m.pageOpen();
     await m.denyCookies();
