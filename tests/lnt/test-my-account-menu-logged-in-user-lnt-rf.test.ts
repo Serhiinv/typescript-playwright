@@ -1,7 +1,8 @@
 import { test, expect, Page } from '@playwright/test';
 import { UserPage } from '../../page-object/lnt/user-page';
 import { Users } from '../../page-object/users';
-import allure from 'allure-js-commons';
+import * as allure from 'allure-js-commons';
+
 
 
 async function verifyPage(page: Page): Promise<void> {
