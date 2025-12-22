@@ -22,5 +22,5 @@ allure-report/
 .env
 
 strapi-config.ts
-users.ts
+.env.local
 
