@@ -54,6 +54,7 @@ jobs:
       - name: Create executor and environment info for Allure
         if: always()
         run: |
+          mkdir -p allure-results
           echo "Creating executor.json for Allure history tracking..."
           cat > allure-results/executor.json << EOF
           {
@@ -83,7 +84,7 @@ jobs:
           
           echo "Files created:"
           cat allure-results/executor.json
-          cat allure-results/environment.json
+          cat allure-results/environment.json 
 
       - name: Restore previous Allure history if exists
         if: always()
