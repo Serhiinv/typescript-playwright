@@ -1,2 +1,2 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Mon Dec 22 14:11:52 UTC 2025","Mon Dec 22 14:12:08 UTC 2025","15982","chromium","","","","","test my account menu logged in user @lnt-menu-logged",""
+"passed","Mon Dec 22 14:17:18 UTC 2025","Mon Dec 22 14:17:34 UTC 2025","16469","chromium","","","","","test my account menu logged in user @lnt-menu-logged",""
