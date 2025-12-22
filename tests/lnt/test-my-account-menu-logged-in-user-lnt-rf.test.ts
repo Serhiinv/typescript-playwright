@@ -28,7 +28,7 @@ async function clickOnMenu(page: Page, menuName: string): Promise<void> {
 //     await up.open(Users.user_lnt_stg, Users.url_lnt_stg, Users.domain_lnt_stg);
 // });
 
-test('test my account menu logged in user @lnt-menu-logged', async ({ page }) => {
+test('test my account menu logged in user REFACTORED @lnt-menu-logged', async ({ page }) => {
     const up = new UserPage(page);
     await up.open(Users.user_lnt, Users.url_lnt, Users.domain_lnt);
 
@@ -40,22 +40,37 @@ test('test my account menu logged in user @lnt-menu-logged', async ({ page }) =>
         await verifyUserLoggedIn(page);
     });
 
-    // First pass: click each menu item
-    for (const item of menuItems) {
-        await test.step(`Navigate to ${item}`, async () => {
-            await openUserMenu(page);
-            await clickOnMenu(page, item);
+
+    await test.step('Verify user menu on top right', async () => {
+        for (const item of menuItems) {
+            await test.step(`Navigate to ${item}`, async () => {
+                await openUserMenu(page);
+                await clickOnMenu(page, item);
+            });
             await test.step(`Verify page`, async () => {
                 await verifyPage(page);
             });
-        });
-    }
+        }
+    });
 
-    // Second pass: additional menu items
+    await test.step('Verify user menu on My Account page', async () => {
+        for (const item of menuItems) {
+            await test.step(`Navigate to ${item}`, async () => {
+                await clickOnMenu(page, item);
+            });
+            await test.step(`Verify page`, async () => {
+                await verifyPage(page);
+            });
+        }
+    });
+
+    // Additional menu items
     const additionalItems = ['My ID'];
     for (const item of [...menuItems, ...additionalItems]) {
         await test.step(`Navigate to ${item}`, async () => {
             await clickOnMenu(page, item);
+        });
+        await test.step(`Verify page`, async () => {
             await verifyPage(page);
         });
     }
