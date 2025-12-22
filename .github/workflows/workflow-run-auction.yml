@@ -1,4 +1,4 @@
-name: Allure consolidated report
+name: Workflow Run Auction
 # Run on allure-consolidated-report branch only
 
 on:
@@ -80,7 +80,7 @@ jobs:
             "buildName": "Run #${{ github.run_number }}",
             "buildUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
             "reportName": "Allure Report",
-            "reportUrl": "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/allure-report/"
+            "reportUrl": "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
           }
           EOF
           
