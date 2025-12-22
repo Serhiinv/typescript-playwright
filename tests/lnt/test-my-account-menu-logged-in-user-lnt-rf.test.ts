@@ -58,7 +58,8 @@ test('test my account menu logged in user REFACTORED @lnt-menu-logged', async ({
     });
 
     await test.step('Verify user menu on My Account page', async () => {
-        for (const item of menuItems) {
+        const additionalItems = ['My ID'];
+        for (const item of [...menuItems, ...additionalItems]) {
             await test.step(`Navigate to ${item}`, async () => {
                 await clickOnMenu(page, item);
             });
@@ -68,14 +69,4 @@ test('test my account menu logged in user REFACTORED @lnt-menu-logged', async ({
         }
     });
 
-    // Additional menu items
-    const additionalItems = ['My ID'];
-    for (const item of [...menuItems, ...additionalItems]) {
-        await test.step(`Navigate to ${item}`, async () => {
-            await clickOnMenu(page, item);
-        });
-        await test.step(`Verify page`, async () => {
-            await verifyPage(page);
-        });
-    }
 });
