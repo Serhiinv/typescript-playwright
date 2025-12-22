@@ -1,6 +1,8 @@
 import { test, expect, Page } from '@playwright/test';
 import { UserPage } from '../../page-object/lnt/user-page';
 import { Users } from '../../page-object/users';
+import allure from 'allure-js-commons';
+
 
 async function verifyPage(page: Page): Promise<void> {
     await expect(page.getByText("Oops!")).not.toBeVisible({ timeout: 3000 });
@@ -29,6 +31,7 @@ async function clickOnMenu(page: Page, menuName: string): Promise<void> {
 // });
 
 test('test my account menu logged in user REFACTORED @lnt-menu-logged', async ({ page }) => {
+    await allure.issue("JIRA-test name", "https://jira.test/browse/JIRA-test-name");
     const up = new UserPage(page);
     await up.open(Users.user_lnt, Users.url_lnt, Users.domain_lnt);
 
