@@ -11,6 +11,7 @@ test-results/.last-run.json
 allure-results/
 allure-report/
 .allure
+.idea/
 
 # VSCode
 .vscode/
