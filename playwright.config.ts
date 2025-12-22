@@ -3,6 +3,11 @@ import {defineConfig, devices} from '@playwright/test';
 
 dotenv.config({path: '.env.local'});
 
+if (!process.env.CI) {
+    dotenv.config({ path: '.env.local' });
+}
+
+
 export default defineConfig({
     testDir: './tests',
     timeout: 300000,
