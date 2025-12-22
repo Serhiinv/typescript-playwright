@@ -61,7 +61,9 @@ jobs:
         env:
           STRAPI_EMAIL: ${{ secrets.STRAPI_EMAIL }}
           STRAPI_PASSWORD: ${{ secrets.STRAPI_PASSWORD }}
-#        run: npx playwright test --project=chromium --grep @smoke
+          USER_LNT_ID: ${{ secrets.USER_LNT_ID }}
+
+        #        run: npx playwright test --project=chromium --grep @smoke
         run: npx playwright test --project=chromium --grep "${{ github.event.inputs.tags }}"
 
       - name: Create executor and environment info for Allure
