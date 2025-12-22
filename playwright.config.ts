@@ -30,10 +30,12 @@ export default defineConfig({
 
     use: {
         headless: !!process.env.CI,
-
-        trace: 'on-first-retry',
+        screenshot: 'off',
+        trace: 'off',
+        video: 'off',
         baseURL: 'https://playwright.dev/',
     },
+
     projects: [
         {
             name: 'chromium',
