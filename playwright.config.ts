@@ -45,7 +45,9 @@ export default defineConfig({
     // reporter: [['html', {open: 'never', outputFolder: 'playwright-report'}]],
 
     use: {
-        headless: false, // run browsers with UI
+        // headless: false, // run browsers with UI
+        headless: !!process.env.CI,
+
         trace: 'on-first-retry',
         baseURL: 'https://playwright.dev/',
     },
