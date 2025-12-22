@@ -21,6 +21,6 @@ allure-report/
 # Env
 .env
 
-strapi-config.ts
+
 .env.local
 
