@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import {Page, test} from '@playwright/test';
 
 export class UserPage {
     constructor(private page: Page) {}
@@ -17,13 +17,15 @@ export class UserPage {
         ]);
 
         // Open the page with the cookies set
-        await this.page.goto(url);
+        await test.step('Open main page and allow cookies', async () => {
+            await this.page.goto(url);
 
-        try {
-            await this.page.getByRole('button', { name: 'Allow all' }).click();
-        } catch {
-            // Cookies popup did not appear
-        }
+            try {
+                await this.page.getByRole('button', { name: 'Allow all' }).click();
+            } catch {
+                // Cookies popup did not appear
+            }
+        });
     }
 
     async openVercel(
