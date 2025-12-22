@@ -3,6 +3,17 @@ name: Allure consolidated report
 
 on:
   workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Test tags to run (e.g., @smoke, @menu-main)'
+        required: false
+        default: '@smoke'
+        type: choice
+        options:
+          - '@smoke'
+          - '@menu-main'
+          - '@menu-logged'
+
 
 permissions:
   contents: write
@@ -47,9 +58,11 @@ jobs:
         continue-on-error: true
 
       - name: Run Playwright tests
-        run: npx playwright test --project=chromium --grep @smoke
         env:
-          CI: true
+          STRAPI_EMAIL: ${{ secrets.STRAPI_EMAIL }}
+          STRAPI_PASSWORD: ${{ secrets.STRAPI_PASSWORD }}
+#        run: npx playwright test --project=chromium --grep @smoke
+        run: npx playwright test --project=chromium --grep "${{ github.event.inputs.tags }}"
 
       - name: Create executor and environment info for Allure
         if: always()
