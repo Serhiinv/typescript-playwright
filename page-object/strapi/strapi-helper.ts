@@ -1,8 +1,4 @@
 import {Page, expect} from '@playwright/test';
-// import { logAllMethods, getLogger } from '../../utils/logger';
-//
-// const logger = getLogger('strapi_helper');
-
 import {StrapiConfig} from './strapi-config';
 
 export class StrapiHelper {

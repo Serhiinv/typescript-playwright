@@ -1,7 +1,6 @@
 import { expect, Page } from '@playwright/test';
-// import { logAllMethods, logger } from '@/app/utils/logger';
 
-// @logAllMethods
+
 export class Main {
   constructor(private page: Page) {}
 
