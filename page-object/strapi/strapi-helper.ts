@@ -14,25 +14,26 @@ export class StrapiHelper {
     //     });
     // }
 
-    // async login(): Promise<void> {
-    //     await test.step('Login with credentials', async () => {
-    //         await this.page.goto(StrapiConfig.loginUrl);
-    //         const email = '***@***.com'; // Masked for reporting
-    //         const password = '***'; // Masked for reporting
-    //
-    //         await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
-    //         await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
-    //         await this.page.getByRole('button', {name: 'Login'}).click();
-    //     });
-    // }
     async login(): Promise<void> {
-        await test.step(`Login with ${StrapiConfig.maskedEmail} / ${StrapiConfig.maskedPassword}`, async () => {
+        await test.step('Login with credentials', async () => {
             await this.page.goto(StrapiConfig.loginUrl);
+            const email = '***@***.com'; // Masked for reporting
+            const password = '***'; // Masked for reporting
+
             await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
             await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
             await this.page.getByRole('button', {name: 'Login'}).click();
         });
     }
+
+    // async login(): Promise<void> {
+    //     await test.step(`Login with ${StrapiConfig.maskedEmail} / ${StrapiConfig.maskedPassword}`, async () => {
+    //         await this.page.goto(StrapiConfig.loginUrl);
+    //         await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
+    //         await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
+    //         await this.page.getByRole('button', {name: 'Login'}).click();
+    //     });
+    // }
 
 
 
@@ -85,8 +86,10 @@ export class StrapiHelper {
     }
 
     async saveDraft(): Promise<void> {
+        await test.step('Save as Draft', async () => {
         await this.page.getByRole('button', {name: 'Save'}).click();
         await expect(this.page.getByText('Saved document')).toBeVisible()
+        });
     }
 
     async verifyPageOnStaging(headerValue: string, stagingUrl: string): Promise<void> {
@@ -112,26 +115,32 @@ export class StrapiHelper {
     }
 
     async createPageEntry(shortName: string, slug: string): Promise<void> {
+        await test.step(`Create page entry with slug: ${slug}`, async () => {
         await this.page.getByRole('link', {name: 'Create new entry'}).click();
         await this.page.getByRole('textbox', {name: 'shortName'}).fill(shortName);
 
         await this.page.getByLabel('slug').fill(slug);
         await this.page.getByRole('button', {name: 'Add a component to header'}).click();
         await this.page.getByRole('button', {name: 'Simple header'}).click();
+        });
     }
 
     async addSimpleHeader(title: string): Promise<void> {
+        await test.step(`Add Simple header with title: ${title}`, async () => {
         await this.page.getByRole('button', {name: 'Simple header'}).click();
         await this.page.getByRole('textbox', {name: 'title'}).fill(title);
+        });
     }
 
     async addDesktopImage(imageName: string): Promise<void> {
+        await test.step(`Add desktop image: ${imageName}`, async () => {
         await this.page.getByLabel('desktopImage').getByRole('button', {name: 'Click to add an asset or drag'}).click();
         await this.page.getByRole('button', {name: 'Search'}).click();
         await this.page.getByPlaceholder('e.g: the first dog on the moon').fill(imageName);
         await this.page.getByPlaceholder('e.g: the first dog on the moon').press('Enter');
         await this.page.getByRole('checkbox', {name: imageName}).click();
         await this.page.getByRole('button', {name: 'Finish'}).click();
+        });
     }
 
     async unpublishEntry(): Promise<void> {
@@ -240,7 +249,6 @@ export class StrapiHelper {
                     await this.page.waitForTimeout(retryInterval);
                     await this.page.reload();
                 } else {
-                    // logger.warn(`Failed to verify artist follow field value: ${fieldValue}`);
                     throw new Error(`Failed to verify artist follow field value: ${fieldValue}`);
                 }
             }

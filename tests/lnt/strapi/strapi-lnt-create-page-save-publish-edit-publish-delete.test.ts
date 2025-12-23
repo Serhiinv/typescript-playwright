@@ -37,3 +37,6 @@ test('Strapi - Test create page save publish edit publish delete', async ({ page
   await strapi.unpublishEntry();
   await strapi.deleteEntry();
 });
+
+// await test.step('Navigate to Pages', async () => {
+// });
