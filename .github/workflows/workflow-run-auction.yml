@@ -113,6 +113,30 @@ jobs:
           else
             echo "No previous Allure history found - starting fresh"
           fi
+#      - name: Restore previous Allure history if exists
+#        if: always()
+#        run: |
+#          if [ -d "gh-pages-temp/allure-report/history" ]; then
+#            echo "Restoring previous Allure history..."
+#            mkdir -p allure-results/history
+#
+#            # Keep only the last 10 runs in history
+#            if [ -f "gh-pages-temp/allure-report/history/history.json" ]; then
+#              jq 'if length > 10 then .[-10:] else . end' \
+#                gh-pages-temp/allure-report/history/history.json > \
+#                allure-results/history/history.json
+#            fi
+#
+#            if [ -f "gh-pages-temp/allure-report/history/history-trend.json" ]; then
+#              jq 'if length > 10 then .[-10:] else . end' \
+#                gh-pages-temp/allure-report/history/history-trend.json > \
+#                allure-results/history/history-trend.json
+#            fi
+#
+#            echo "Limited history to last 10 runs"
+#          else
+#            echo "No previous Allure history found"
+#          fi
 
       - name: Generate Allure Report with History
         if: always()
@@ -131,7 +155,6 @@ jobs:
           name: allure-report
           path: allure-report
           retention-days: 7
-
 
   deploy-report:
     needs: test
@@ -183,31 +206,43 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Send email via SendGrid  # Add Send email notifications
-        if: always()
-        env:
-          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
-          RECIPIENTS: bv.user.as@gmail.com
-          SENDER: serhii.nv@gmail.com
-          REPORT_URL: https://serhiinv.github.io/typescript-playwright/ # or workflow run URL / artifact link
-          WORKFLOW_RUNS: https://github.com/Serhiinv/typescript-playwright/actions/workflows/
-        
-        run: |
-          SUBJECT="Allure Report - ${{ github.workflow }} - ${{ github.ref_name }} - Passed:${{ steps.summary.outputs.passed }} Failed:${{ steps.summary.outputs.failed }}"
-          BODY="Test run summary:\nPassed: ${{ steps.summary.outputs.passed }}\nFailed: ${{ steps.summary.outputs.failed }}\nReport: $REPORT_URL\n\nSee Workflow runs for details: $WORKFLOW_RUNS"
+#      - name: Clean old reports if too large
+#        if: always()
+#        run: |
+#          cd gh-pages
+#          REPORT_SIZE=$(du -sm allure-report 2>/dev/null | cut -f1 || echo 0)
+#          if [ "$REPORT_SIZE" -gt 100 ]; then
+#            echo "Report size ${REPORT_SIZE}MB exceeds 100MB - cleaning up"
+#            rm -rf allure-report/history/*
+#            git add allure-report
+#            git commit -m "Clean up Allure history - size exceeded limit" || true
+#          fi
 
-          curl --request POST \
-            --url https://api.sendgrid.com/v3/mail/send \
-            --header "Authorization: Bearer $SENDGRID_API_KEY" \
-            --header 'Content-Type: application/json' \
-            --data '{
-              "personalizations": [{
-                "to": [{"email": "'"$RECIPIENTS"'"}],
-                "subject": "'"$SUBJECT"'"
-              }],
-              "from": {"email": "'"$SENDER"'"},
-              "content": [{
-                "type": "text/plain",
-                "value": "'"$BODY"'"
-              }]
-            }'
+#      - name: Send email via SendGrid  # Add Send email notifications
+#        if: always()
+#        env:
+#          SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+#          RECIPIENTS: bv.user.as@gmail.com
+#          SENDER: serhii.nv@gmail.com
+#          REPORT_URL: https://serhiinv.github.io/typescript-playwright/ # or workflow run URL / artifact link
+#          WORKFLOW_RUNS: https://github.com/Serhiinv/typescript-playwright/actions/workflows/
+#
+#        run: |
+#          SUBJECT="Allure Report - ${{ github.workflow }} - ${{ github.ref_name }} - Passed:${{ steps.summary.outputs.passed }} Failed:${{ steps.summary.outputs.failed }}"
+#          BODY="Test run summary:\nPassed: ${{ steps.summary.outputs.passed }}\nFailed: ${{ steps.summary.outputs.failed }}\nReport: $REPORT_URL\n\nSee Workflow runs for details: $WORKFLOW_RUNS"
+#
+#          curl --request POST \
+#            --url https://api.sendgrid.com/v3/mail/send \
+#            --header "Authorization: Bearer $SENDGRID_API_KEY" \
+#            --header 'Content-Type: application/json' \
+#            --data '{
+#              "personalizations": [{
+#                "to": [{"email": "'"$RECIPIENTS"'"}],
+#                "subject": "'"$SUBJECT"'"
+#              }],
+#              "from": {"email": "'"$SENDER"'"},
+#              "content": [{
+#                "type": "text/plain",
+#                "value": "'"$BODY"'"
+#              }]
+#            }'
