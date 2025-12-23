@@ -6,16 +6,25 @@ export class StrapiHelper {
     }
 
     async login(): Promise<void> {
-        await test.step('Login', async () => {
+        await test.step('Page open', async () => {
             await this.page.goto(StrapiConfig.loginUrl);
-
-            await test.step('   ', async () => {
-                await test.step('   ', async () => {
-
-
-            await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
-            await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
+            await test.step('Decline Cookies', async () => {
+                await this.page.locator('input').first().fill(StrapiConfig.email);
             });
+            await test.step('Close context', async () => {
+                await test.step('New context', async () => {
+                });
+                await test.step('Refresh page', async () => {
+                    await this.page.locator('input').nth(1).fill(StrapiConfig.password);
+                });
+            });
+        });
+
+        await test.step('Login', async () => {
+
+            await test.step('Fill "***@***.com" getByRole("textbox", { name: "Email" })', async () => {
+            });
+            await test.step('Fill "******" getByRole("textbox", { name: "Password" })', async () => {
             });
 
             await this.page.getByRole('button', {name: 'Login'}).click();
@@ -72,8 +81,8 @@ export class StrapiHelper {
 
     async saveDraft(): Promise<void> {
         await test.step('Save as Draft', async () => {
-        await this.page.getByRole('button', {name: 'Save'}).click();
-        await expect(this.page.getByText('Saved document')).toBeVisible()
+            await this.page.getByRole('button', {name: 'Save'}).click();
+            await expect(this.page.getByText('Saved document')).toBeVisible()
         });
     }
 
@@ -101,30 +110,30 @@ export class StrapiHelper {
 
     async createPageEntry(shortName: string, slug: string): Promise<void> {
         await test.step(`Create page entry with slug: ${slug}`, async () => {
-        await this.page.getByRole('link', {name: 'Create new entry'}).click();
-        await this.page.getByRole('textbox', {name: 'shortName'}).fill(shortName);
+            await this.page.getByRole('link', {name: 'Create new entry'}).click();
+            await this.page.getByRole('textbox', {name: 'shortName'}).fill(shortName);
 
-        await this.page.getByLabel('slug').fill(slug);
-        await this.page.getByRole('button', {name: 'Add a component to header'}).click();
-        await this.page.getByRole('button', {name: 'Simple header'}).click();
+            await this.page.getByLabel('slug').fill(slug);
+            await this.page.getByRole('button', {name: 'Add a component to header'}).click();
+            await this.page.getByRole('button', {name: 'Simple header'}).click();
         });
     }
 
     async addSimpleHeader(title: string): Promise<void> {
         await test.step(`Add Simple header with title: ${title}`, async () => {
-        await this.page.getByRole('button', {name: 'Simple header'}).click();
-        await this.page.getByRole('textbox', {name: 'title'}).fill(title);
+            await this.page.getByRole('button', {name: 'Simple header'}).click();
+            await this.page.getByRole('textbox', {name: 'title'}).fill(title);
         });
     }
 
     async addDesktopImage(imageName: string): Promise<void> {
         await test.step(`Add desktop image: ${imageName}`, async () => {
-        await this.page.getByLabel('desktopImage').getByRole('button', {name: 'Click to add an asset or drag'}).click();
-        await this.page.getByRole('button', {name: 'Search'}).click();
-        await this.page.getByPlaceholder('e.g: the first dog on the moon').fill(imageName);
-        await this.page.getByPlaceholder('e.g: the first dog on the moon').press('Enter');
-        await this.page.getByRole('checkbox', {name: imageName}).click();
-        await this.page.getByRole('button', {name: 'Finish'}).click();
+            await this.page.getByLabel('desktopImage').getByRole('button', {name: 'Click to add an asset or drag'}).click();
+            await this.page.getByRole('button', {name: 'Search'}).click();
+            await this.page.getByPlaceholder('e.g: the first dog on the moon').fill(imageName);
+            await this.page.getByPlaceholder('e.g: the first dog on the moon').press('Enter');
+            await this.page.getByRole('checkbox', {name: imageName}).click();
+            await this.page.getByRole('button', {name: 'Finish'}).click();
         });
     }
 
@@ -298,7 +307,7 @@ export class StrapiHelper {
     }
 
     async checkBoxColumnVisibility(columnName: string, checked: boolean): Promise<void> {
-        const checkbox = this.page.getByRole('checkbox', { name: columnName });
+        const checkbox = this.page.getByRole('checkbox', {name: columnName});
 
         await expect(checkbox).toBeVisible();
         await expect(checkbox).toBeEnabled();
