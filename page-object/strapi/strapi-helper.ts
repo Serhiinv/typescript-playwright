@@ -9,12 +9,11 @@ export class StrapiHelper {
         await test.step('Page open', async () => {
             await this.page.goto(StrapiConfig.loginUrl);
             await test.step('Decline Cookies', async () => {
-                await test.step('Fill "eileen@binaryvision.com" locator(\'input\').first', async () => {
+                await test.step('Fill "eileen@binaryvision.com" locator(\'input\').first()', async () => {
                 });
                 await this.page.locator('input').first().fill(StrapiConfig.email);
-                await test.step('Fill "adams@binaryvision.com" locator(\'input\').first', async () => {
-                });
-                await test.step('Fill "lemuel@binaryvision.com" locator(\'input\').first', async () => {
+                await test.step('Setup new', async () => {
+                await test.step('Fill "lemuel@binaryvision.com" locator(\'input\').first()', async () => {});
                 });
             });
             await test.step('Close context', async () => {
