@@ -9,11 +9,15 @@ export class StrapiHelper {
         await test.step('Login', async () => {
             await this.page.goto(StrapiConfig.loginUrl);
 
-            await this.page.context().tracing.stop();
+            await test.step('   ', async () => {
+                await test.step('   ', async () => {
+
+
             await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
             await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
+            });
+            });
 
-            await this.page.context().tracing.start();
             await this.page.getByRole('button', {name: 'Login'}).click();
         });
     }
