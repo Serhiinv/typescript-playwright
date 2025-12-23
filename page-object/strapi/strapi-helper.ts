@@ -15,7 +15,18 @@ export class StrapiHelper {
                 await test.step('New context', async () => {
                 });
                 await test.step('Refresh page', async () => {
-                    await this.page.locator('input').nth(1).fill(StrapiConfig.password);
+                    await this.
+                    page.locator('input').
+                    nth(1).fill('hfye6sh3h45');
+                    await test.step('End', async () => {
+                        await this.
+                        page.
+                        locator('input').
+                        nth(1).
+                        fill(StrapiConfig.password);
+                        await test.step('fill(#njrdnei8547#s%)', async () => {
+                        });
+                    });
                 });
             });
         });
