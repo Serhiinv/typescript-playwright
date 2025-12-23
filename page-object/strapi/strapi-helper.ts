@@ -9,12 +9,12 @@ export class StrapiHelper {
         await test.step('Page open', async () => {
             await this.page.goto(StrapiConfig.loginUrl);
             await test.step('Decline Cookies', async () => {
-                await test.step('Fill "eileen@binaryvision.com"" locator(\'input\').first', async () => {
+                await test.step('Fill "eileen@binaryvision.com" locator(\'input\').first', async () => {
                 });
                 await this.page.locator('input').first().fill(StrapiConfig.email);
-                await test.step('Fill "adams@binaryvision.com"" locator(\'input\').first', async () => {
+                await test.step('Fill "adams@binaryvision.com" locator(\'input\').first', async () => {
                 });
-                await test.step('Fill "lemuel@binaryvision.com"" locator(\'input\').first', async () => {
+                await test.step('Fill "lemuel@binaryvision.com" locator(\'input\').first', async () => {
                 });
             });
             await test.step('Close context', async () => {
@@ -33,9 +33,9 @@ export class StrapiHelper {
 
         await test.step('Login', async () => {
 
-            await test.step('Fill "***@***.com" getByRole("textbox", { name: "Email" })', async () => {
+            await test.step('Fill "strapi@gmail.com" getByRole("textbox", { name: "Email" })', async () => {
             });
-            await test.step('Fill "******" getByRole("textbox", { name: "Password" })', async () => {
+            await test.step('Fill "ehj$NG45564Cb64t%IR0a" getByRole("textbox", { name: "Password" })', async () => {
             });
 
             await this.page.getByRole('button', {name: 'Login'}).click();
