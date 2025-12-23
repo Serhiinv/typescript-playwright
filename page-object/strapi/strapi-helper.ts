@@ -9,22 +9,22 @@ export class StrapiHelper {
         await test.step('Page open', async () => {
             await this.page.goto(StrapiConfig.loginUrl);
             await test.step('Decline Cookies', async () => {
+                await test.step('Fill "eileen@binaryvision.com"" locator(\'input\').first', async () => {
+                });
                 await this.page.locator('input').first().fill(StrapiConfig.email);
+                await test.step('Fill "adams@binaryvision.com"" locator(\'input\').first', async () => {
+                });
+                await test.step('Fill "lemuel@binaryvision.com"" locator(\'input\').first', async () => {
+                });
             });
             await test.step('Close context', async () => {
                 await test.step('New context', async () => {
                 });
                 await test.step('Refresh page', async () => {
-                    await this.
-                    page.locator('input').
-                    nth(1).fill('hfye6sh3h45');
+                    await this.page.locator('input').nth(1).fill('hfRJ348ye6sh!3h#45');
                     await test.step('End', async () => {
-                        await this.
-                        page.
-                        locator('input').
-                        nth(1).
-                        fill(StrapiConfig.password);
-                        await test.step('fill(#njrdnei8547#s%)', async () => {
+                        await this.page.locator('input').nth(1).fill(StrapiConfig.password);
+                        await test.step('Fill "eh$NG4564Cb64t%IRm" locator(\'input\').nth(1)', async () => {
                         });
                     });
                 });
