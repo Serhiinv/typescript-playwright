@@ -73,4 +73,30 @@ export class UserPage {
         await this.page.context().addCookies(cookies);
         await this.page.goto(url);
     }
+
+    async openStrapi(strapi_lnt_jwt: string, strapi_lnt_domain: string): Promise<void> {
+    // async openStrapi(): Promise<void> {
+        // Set the cookies
+        await this.page.context().addCookies([
+            {
+                name: 'jwtToken',
+                value: strapi_lnt_jwt,
+                domain: strapi_lnt_domain,
+                path: '/',
+                secure: false,
+                sameSite: 'Lax'
+            }
+        ]);
+
+        // Open the page with the cookies set
+        await test.step('Open main page and allow cookies', async () => {
+            await this.page.goto(`https://${strapi_lnt_domain}`);
+
+            try {
+                await this.page.getByRole('button', { name: 'Allow all' }).click();
+            } catch {
+                // Cookies popup did not appear
+            }
+        });
+    }
 }
