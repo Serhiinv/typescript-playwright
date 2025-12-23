@@ -1,4 +1,4 @@
-import {Page, expect} from '@playwright/test';
+import {Page, expect, test} from '@playwright/test';
 import {StrapiConfig} from './strapi-config';
 
 export class StrapiHelper {
@@ -6,10 +6,12 @@ export class StrapiHelper {
     }
 
     async login(): Promise<void> {
-        await this.page.goto(StrapiConfig.loginUrl);
-        await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
-        await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
-        await this.page.getByRole('button', {name: 'Login'}).click();
+        await test.step('Login', async () => {
+            await this.page.goto(StrapiConfig.loginUrl);
+            await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
+            await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
+            await this.page.getByRole('button', {name: 'Login'}).click();
+        });
     }
 
     async open(): Promise<void> {
@@ -17,8 +19,10 @@ export class StrapiHelper {
     }
 
     async navigateToPages(): Promise<void> {
-        await this.openContentManager()
-        await this.page.getByRole('link', {name: 'Page', exact: true}).click();
+        await test.step('Navigate to Pages', async () => {
+            await this.openContentManager()
+            await this.page.getByRole('link', {name: 'Page', exact: true}).click();
+        });
     }
 
     async openContentManager(): Promise<void> {
@@ -30,13 +34,17 @@ export class StrapiHelper {
     }
 
     async searchEntry(entryName: string): Promise<void> {
-        await this.page.getByRole('button', {name: 'Search'}).click();
-        await this.page.getByLabel('Search for Page').fill(entryName);
-        await this.page.getByLabel('Search for Page').press('Enter');
+        await test.step(`Search entry by name ${entryName}`, async () => {
+            await this.page.getByRole('button', {name: 'Search'}).click();
+            await this.page.getByLabel('Search for Page').fill(entryName);
+            await this.page.getByLabel('Search for Page').press('Enter');
+        });
     }
 
     async openEntryByName(entryName: string): Promise<void> {
-        await this.page.getByText(entryName).click();
+        await test.step(`Open entry by name ${entryName}`, async () => {
+            await this.page.getByText(entryName).click();
+        });
     }
 
     async openComponent(componentName: string): Promise<void> {
@@ -48,8 +56,10 @@ export class StrapiHelper {
     }
 
     async publishPage(): Promise<void> {
-        await this.page.getByRole('button', {name: 'Publish'}).click();
-        await expect(this.page.getByText('Published document')).toBeVisible()
+        await test.step('Publish page', async () => {
+            await this.page.getByRole('button', {name: 'Publish'}).click();
+            await expect(this.page.getByText('Published document')).toBeVisible()
+        });
     }
 
     async saveDraft(): Promise<void> {
@@ -115,46 +125,50 @@ export class StrapiHelper {
     }
 
     async selectArtistColourScheme(): Promise<string> {
-        await this.page.getByRole('button', {name: '/50 Artist'}).click();
+        return await test.step('Select Artist color scheme', async () => {
+            await this.page.getByRole('button', {name: '/50 Artist'}).click();
 
-        try {
-            await expect(this.page.getByText('Diego')).toBeVisible();
-            await this.page.getByRole('button', {name: 'Remove'}).nth(1).click();
-            await this.page.getByLabel('colourScheme').click();
-            await this.page.getByText('Giulia').click();
-            return 'rgb(244, 164, 165)';
-        } catch {
-            await this.page.getByRole('button', {name: 'Remove'}).nth(1).click();
-            await this.page.getByLabel('colourScheme').click();
-            await this.page.getByText('Diego').click();
-            return 'rgb(32, 149, 196)';
-        }
+            try {
+                await expect(this.page.getByText('Diego')).toBeVisible();
+                await this.page.getByRole('button', {name: 'Remove'}).nth(1).click();
+                await this.page.getByLabel('colourScheme').click();
+                await this.page.getByText('Giulia').click();
+                return 'rgb(244, 164, 165)';
+            } catch {
+                await this.page.getByRole('button', {name: 'Remove'}).nth(1).click();
+                await this.page.getByLabel('colourScheme').click();
+                await this.page.getByText('Diego').click();
+                return 'rgb(32, 149, 196)';
+            }
+        });
     }
 
     async verifyArtistComponentBackground(
         bgColor: string,
         stagingUrl: string = 'https://staging-lyonandturnbull.auctionfusion.com/sn-page-at'
     ): Promise<void> {
-        await this.page.goto(stagingUrl);
-        const maxRetries = 20;
-        const retryInterval = 10000;
+        await test.step('Verify Artist component background on FE', async () => {
+            await this.page.goto(stagingUrl);
+            const maxRetries = 20;
+            const retryInterval = 10000;
 
-        for (let attempt = 0; attempt < maxRetries; attempt++) {
-            try {
-                await expect(
-                    this.page.locator('div').filter({hasText: /^ArtistsAlan Davie/}).nth(2)
-                ).toHaveCSS('background-color', bgColor);
-                return;
-            } catch {
-                if (attempt < maxRetries - 1) {
-                    await this.page.waitForTimeout(retryInterval);
-                    await this.page.reload();
-                } else {
-                    // logger.warn(`Failed to verify artist component background color: ${bgColor}`);
-                    throw new Error(`Failed to verify artist component background color: ${bgColor}`);
+            for (let attempt = 0; attempt < maxRetries; attempt++) {
+                try {
+                    await expect(
+                        this.page.locator('div').filter({hasText: /^ArtistsAlan Davie/}).nth(2)
+                    ).toHaveCSS('background-color', bgColor);
+                    return;
+                } catch {
+                    if (attempt < maxRetries - 1) {
+                        await this.page.waitForTimeout(retryInterval);
+                        await this.page.reload();
+                    } else {
+                        // logger.warn(`Failed to verify artist component background color: ${bgColor}`);
+                        throw new Error(`Failed to verify artist component background color: ${bgColor}`);
+                    }
                 }
             }
-        }
+        });
     }
 
     async openGlobalStringsEditor(): Promise<void> {
@@ -212,11 +226,13 @@ export class StrapiHelper {
     }
 
     async skipTutorial(): Promise<void> {
-        try {
-            await this.page.getByRole('button', {name: 'Skip'}).click({timeout: 5000});
-        } catch {
-            // Tutorial skip failed, continuing
-        }
+        await test.step('Skip tutorial', async () => {
+            try {
+                await this.page.getByRole('button', {name: 'Skip'}).click({timeout: 5000});
+            } catch {
+                // Tutorial skip failed, continuing
+            }
+        });
     }
 
     async verifyEntryInListOnly(entryName: string): Promise<void> {
@@ -287,7 +303,5 @@ export class StrapiHelper {
             await expect(columnLocator).not.toBeVisible();
         }
     }
-
-
 
 }
