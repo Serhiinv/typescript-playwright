@@ -5,20 +5,37 @@ export class StrapiHelper {
     constructor(private page: Page) {
     }
 
+    // async login(): Promise<void> {
+    //     await test.step('Login', async () => {
+    //         await this.page.goto(StrapiConfig.loginUrl);
+    //         await test.step('Enter email: ***@***.*', async () => {});
+    //         await test.step('Enter password: ***', async () => {});
+    //
+    //         await this.page.context().tracing.stop();
+    //         await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
+    //         await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
+    //
+    //         await this.page.context().tracing.start();
+    //         await this.page.getByRole('button', {name: 'Login'}).click();
+    //     });
+    // }
     async login(): Promise<void> {
         await test.step('Login', async () => {
             await this.page.goto(StrapiConfig.loginUrl);
-            await test.step('Enter email: ***@***.*', async () => {});
-            await test.step('Enter password: ***', async () => {});
 
-            await this.page.context().tracing.stop();
-            await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
-            await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
+            // Fill credentials without logging
+            await this.page.evaluate((credentials) => {
+                const emailInput = document.querySelector('input[name="Email"]') as HTMLInputElement;
+                const passwordInput = document.querySelector('input[type="password"]') as HTMLInputElement;
 
-            await this.page.context().tracing.start();
+                if (emailInput) emailInput.value = credentials.email;
+                if (passwordInput) passwordInput.value = credentials.password;
+            }, { email: StrapiConfig.email, password: StrapiConfig.password });
+
             await this.page.getByRole('button', {name: 'Login'}).click();
         });
     }
+
 
     // async login(): Promise<void> {
     //     await test.step('Login with credentials', async () => {
