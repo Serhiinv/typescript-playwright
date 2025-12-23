@@ -19,45 +19,40 @@ export class StrapiHelper {
     //         await this.page.getByRole('button', {name: 'Login'}).click();
     //     });
     // }
+    // async login(): Promise<void> {
+    //     await test.step('Login', async () => {
+    //         await this.page.goto(StrapiConfig.loginUrl);
+    //
+    //         // Fill credentials without logging
+    //         await this.page.evaluate((credentials) => {
+    //             const emailInput = document.querySelector('input[name="email"]') as HTMLInputElement;
+    //             const passwordInput = document.querySelector('input[type="password"]') as HTMLInputElement;
+    //
+    //             if (emailInput) emailInput.value = credentials.email;
+    //             if (passwordInput) passwordInput.value = credentials.password;
+    //         }, { email: StrapiConfig.email, password: StrapiConfig.password });
+    //
+    //         await this.page.getByRole('button', {name: 'Login'}).click();
+    //     });
+    // }
+
+
     async login(): Promise<void> {
         await test.step('Login', async () => {
             await this.page.goto(StrapiConfig.loginUrl);
 
-            // Fill credentials without logging
-            await this.page.evaluate((credentials) => {
-                const emailInput = document.querySelector('input[name="Email"]') as HTMLInputElement;
-                const passwordInput = document.querySelector('input[type="password"]') as HTMLInputElement;
+            const emailInput = this.page.locator('input[name="email"]');
+            const passwordInput = this.page.locator('input[type="password"]');
 
-                if (emailInput) emailInput.value = credentials.email;
-                if (passwordInput) passwordInput.value = credentials.password;
-            }, { email: StrapiConfig.email, password: StrapiConfig.password });
+            await emailInput.click();
+            await emailInput.type(StrapiConfig.email);
+
+            await passwordInput.click();
+            await passwordInput.type(StrapiConfig.password);
 
             await this.page.getByRole('button', {name: 'Login'}).click();
         });
     }
-
-
-    // async login(): Promise<void> {
-    //     await test.step('Login with credentials', async () => {
-    //         await this.page.goto(StrapiConfig.loginUrl);
-    //         const email = '***@***.com'; // Masked for reporting
-    //         const password = '***'; // Masked for reporting
-    //
-    //         await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
-    //         await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
-    //         await this.page.getByRole('button', {name: 'Login'}).click();
-    //     });
-    // }
-
-    // async login(): Promise<void> {
-    //     await test.step(`Login with ${StrapiConfig.maskedEmail} / ${StrapiConfig.maskedPassword}`, async () => {
-    //         await this.page.goto(StrapiConfig.loginUrl);
-    //         await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
-    //         await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
-    //         await this.page.getByRole('button', {name: 'Login'}).click();
-    //     });
-    // }
-
 
 
     async open(): Promise<void> {
