@@ -1,5 +1,5 @@
 name: Workflow Run Auction
-# Run on allure-consolidated-report branch only
+run-name: Test run for ${{ github.event.inputs.tags  }}  🚀
 
 on:
   workflow_dispatch:
