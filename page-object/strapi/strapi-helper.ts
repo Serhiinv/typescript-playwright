@@ -38,21 +38,50 @@ export class StrapiHelper {
 
 
     async login(): Promise<void> {
-        await test.step('Login', async () => {
-            await this.page.goto(StrapiConfig.loginUrl);
+        const browser = this.page.context().browser();
+        if (!browser) throw new Error('Browser not available');
 
-            const emailInput = this.page.locator('input[name="email"]');
-            const passwordInput = this.page.locator('input[type="password"]');
+        // Create a temporary context just for login (no tracing)
+        const loginContext = await browser.newContext();
+        const loginPage = await loginContext.newPage();
 
-            await emailInput.click();
-            await emailInput.type(StrapiConfig.email);
+        await loginPage.goto(StrapiConfig.loginUrl);
+        await loginPage.locator('input[name="email"]').fill(StrapiConfig.email);
+        await loginPage.locator('input[type="password"]').fill(StrapiConfig.password);
+        await loginPage.locator('button[type="submit"]').click();
 
-            await passwordInput.click();
-            await passwordInput.type(StrapiConfig.password);
+        // await loginPage.waitForURL('**/admin/**');
+        await loginPage.waitForLoadState('networkidle');
 
-            await this.page.getByRole('button', {name: 'Login'}).click();
-        });
+
+        // Extract the authentication cookie
+        const cookies = await loginContext.cookies();
+        const jwtCookie = cookies.find(c => c.name === 'jwtToken');
+
+        if (!jwtCookie) {
+            throw new Error('Authentication failed - jwtToken cookie not found');
+        }
+
+        // Close the login context (no trace saved)
+        await loginContext.close();
+
+        // Add the cookie to your main test context (only cookie name/domain shown, not value)
+        await this.page.context().addCookies([{
+            name: jwtCookie.name,
+            value: jwtCookie.value,
+            domain: jwtCookie.domain,
+            path: jwtCookie.path,
+            secure: jwtCookie.secure,
+            sameSite: jwtCookie.sameSite
+        }]);
+
+        // Navigate to the authenticated area
+        await this.page.goto(StrapiConfig.loginUrl);
     }
+
+
+
+
 
 
     async open(): Promise<void> {
