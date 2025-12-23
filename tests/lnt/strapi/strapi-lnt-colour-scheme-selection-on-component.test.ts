@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 import {StrapiHelper} from "../../../page-object/strapi/strapi-helper";
 
-test('Strapi - Test colour scheme selection on component', async ({ page }) => {
+test('Strapi - Test colour scheme selection on component @lnt-color-scheme', async ({ page }) => {
 
   const strapi = new StrapiHelper(page);
   const slug = 'sn-page-at';
