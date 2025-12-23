@@ -7,10 +7,10 @@ export class Users {
 
     // L&T Production
     static readonly user_lnt = process.env.USER_LNT_ID || '';
-    // static readonly url_lnt = process.env.USER_LNT_URL || 'https://www.lyonandturnbull.com';
     static readonly url_lnt = 'https://www.lyonandturnbull.com';
-    // static readonly domain_lnt = process.env.USER_LNT_DOMAIN || 'www.lyonandturnbull.com';
     static readonly domain_lnt = 'www.lyonandturnbull.com';
+    // static readonly url_lnt = process.env.USER_LNT_URL || 'https://www.lyonandturnbull.com';
+    // static readonly domain_lnt = process.env.USER_LNT_DOMAIN || 'www.lyonandturnbull.com';
 
     // SGB Staging
     static readonly user_sgb_stg = process.env.USER_SGB_STG_ID || '';
