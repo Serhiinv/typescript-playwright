@@ -11,10 +11,10 @@ test('Strapi - Test colour scheme selection on component @lnt-color-scheme', asy
   const strapi = new StrapiHelper(page);
   const slug = 'sn-page-at';
 
-  // await strapi.login(); //not secure
+  await strapi.login(); //not secure
 
-  const up = new UserPage(page); //secure
-  await up.openStrapi(Users.strapi_lnt_jwt, Users.strapi_lnt_domain);
+  // const up = new UserPage(page); //secure
+  // await up.openStrapi(Users.strapi_lnt_jwt, Users.strapi_lnt_domain);
 
   await strapi.navigateToPages();
   await strapi.skipTutorial();
