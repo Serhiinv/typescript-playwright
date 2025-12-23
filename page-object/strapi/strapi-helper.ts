@@ -5,14 +5,36 @@ export class StrapiHelper {
     constructor(private page: Page) {
     }
 
+    // async login(): Promise<void> {
+    //     await test.step('Login', async () => {
+    //         await this.page.goto(StrapiConfig.loginUrl);
+    //         await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
+    //         await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
+    //         await this.page.getByRole('button', {name: 'Login'}).click();
+    //     });
+    // }
+
+    // async login(): Promise<void> {
+    //     await test.step('Login with credentials', async () => {
+    //         await this.page.goto(StrapiConfig.loginUrl);
+    //         const email = '***@***.com'; // Masked for reporting
+    //         const password = '***'; // Masked for reporting
+    //
+    //         await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
+    //         await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
+    //         await this.page.getByRole('button', {name: 'Login'}).click();
+    //     });
+    // }
     async login(): Promise<void> {
-        await test.step('Login', async () => {
+        await test.step(`Login with ${StrapiConfig.maskedEmail} / ${StrapiConfig.maskedPassword}`, async () => {
             await this.page.goto(StrapiConfig.loginUrl);
             await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
             await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
             await this.page.getByRole('button', {name: 'Login'}).click();
         });
     }
+
+
 
     async open(): Promise<void> {
         await this.page.goto(StrapiConfig.loginUrl);
