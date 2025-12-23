@@ -5,84 +5,18 @@ export class StrapiHelper {
     constructor(private page: Page) {
     }
 
-    // async login(): Promise<void> {
-    //     await test.step('Login', async () => {
-    //         await this.page.goto(StrapiConfig.loginUrl);
-    //         await test.step('Enter email: ***@***.*', async () => {});
-    //         await test.step('Enter password: ***', async () => {});
-    //
-    //         await this.page.context().tracing.stop();
-    //         await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
-    //         await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
-    //
-    //         await this.page.context().tracing.start();
-    //         await this.page.getByRole('button', {name: 'Login'}).click();
-    //     });
-    // }
-    // async login(): Promise<void> {
-    //     await test.step('Login', async () => {
-    //         await this.page.goto(StrapiConfig.loginUrl);
-    //
-    //         // Fill credentials without logging
-    //         await this.page.evaluate((credentials) => {
-    //             const emailInput = document.querySelector('input[name="email"]') as HTMLInputElement;
-    //             const passwordInput = document.querySelector('input[type="password"]') as HTMLInputElement;
-    //
-    //             if (emailInput) emailInput.value = credentials.email;
-    //             if (passwordInput) passwordInput.value = credentials.password;
-    //         }, { email: StrapiConfig.email, password: StrapiConfig.password });
-    //
-    //         await this.page.getByRole('button', {name: 'Login'}).click();
-    //     });
-    // }
-
-
     async login(): Promise<void> {
-        const browser = this.page.context().browser();
-        if (!browser) throw new Error('Browser not available');
+        await test.step('Login', async () => {
+            await this.page.goto(StrapiConfig.loginUrl);
 
-        // Create a temporary context just for login (no tracing)
-        const loginContext = await browser.newContext();
-        const loginPage = await loginContext.newPage();
+            await this.page.context().tracing.stop();
+            await this.page.getByRole('textbox', {name: 'Email'}).fill(StrapiConfig.email);
+            await this.page.getByRole('textbox', {name: 'Password'}).fill(StrapiConfig.password);
 
-        await loginPage.goto(StrapiConfig.loginUrl);
-        await loginPage.locator('input[name="email"]').fill(StrapiConfig.email);
-        await loginPage.locator('input[type="password"]').fill(StrapiConfig.password);
-        await loginPage.locator('button[type="submit"]').click();
-
-        // await loginPage.waitForURL('**/admin/**');
-        await loginPage.waitForLoadState('networkidle');
-
-
-        // Extract the authentication cookie
-        const cookies = await loginContext.cookies();
-        const jwtCookie = cookies.find(c => c.name === 'jwtToken');
-
-        if (!jwtCookie) {
-            throw new Error('Authentication failed - jwtToken cookie not found');
-        }
-
-        // Close the login context (no trace saved)
-        await loginContext.close();
-
-        // Add the cookie to your main test context (only cookie name/domain shown, not value)
-        await this.page.context().addCookies([{
-            name: jwtCookie.name,
-            value: jwtCookie.value,
-            domain: jwtCookie.domain,
-            path: jwtCookie.path,
-            secure: jwtCookie.secure,
-            sameSite: jwtCookie.sameSite
-        }]);
-
-        // Navigate to the authenticated area
-        await this.page.goto(StrapiConfig.loginUrl);
+            await this.page.context().tracing.start();
+            await this.page.getByRole('button', {name: 'Login'}).click();
+        });
     }
-
-
-
-
-
 
     async open(): Promise<void> {
         await this.page.goto(StrapiConfig.loginUrl);

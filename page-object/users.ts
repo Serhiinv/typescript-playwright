@@ -12,6 +12,9 @@ export class Users {
     // static readonly url_lnt = process.env.USER_LNT_URL || 'https://www.lyonandturnbull.com';
     // static readonly domain_lnt = process.env.USER_LNT_DOMAIN || 'www.lyonandturnbull.com';
 
+    static readonly strapi_lnt_jwt = process.env.STRAPI_LNT_JVT || '';
+    static readonly strapi_lnt_domain = process.env.STRAPI_LNT_DOMAIN || '';
+
     // SGB Staging
     static readonly user_sgb_stg = process.env.USER_SGB_STG_ID || '';
     static readonly url_sgb_stg = process.env.USER_SGB_STG_URL || '';
