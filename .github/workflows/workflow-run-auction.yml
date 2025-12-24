@@ -1,4 +1,4 @@
-name: Workflow Run Auction
+name: Workflow Run - Auction
 run-name: Run - ${{ github.event.inputs.tags }} 🚀
 
 
