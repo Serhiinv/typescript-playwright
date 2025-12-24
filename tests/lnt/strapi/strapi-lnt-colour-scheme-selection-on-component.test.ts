@@ -2,7 +2,7 @@ import { test } from '@playwright/test';
 import {StrapiHelper} from "../../../page-object/strapi/strapi-helper";
 import * as allure from "allure-js-commons";
 
-test('L&T Strapi - Test colour scheme selection on component @lnt-strapi', async ({ page }) => {
+test('L&T strapi - Test colour scheme selection on component @L&T-strapi', async ({ page }) => {
   await allure.issue("JIRA-test name", "https://jira.test/browse/JIRA-test-name");
 
   const strapi = new StrapiHelper(page);
