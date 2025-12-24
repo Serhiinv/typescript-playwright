@@ -1,5 +1,6 @@
 name: Workflow Run Auction
-run-name: Run - ${{ github.event.inputs.tags  }}  🚀
+run-name: Run - ${{ github.event.inputs.tags }} 🚀 | Report at serhiinv.github.io/typescript-playwright
+
 
 on:
   workflow_dispatch:
@@ -232,6 +233,16 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Add report link to summary
+        if: always()
+        run: |
+          echo "### 📊 Allure Report Published" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 [View Allure Report](https://serhiinv.github.io/typescript-playwright/)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Report updated: $(date)" >> $GITHUB_STEP_SUMMARY
+    
 
 #      - name: Clean old reports if too large
 #        if: always()
