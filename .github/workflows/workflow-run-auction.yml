@@ -1,12 +1,12 @@
 name: Workflow Run Auction
-run-name: Run - ${{ github.event.inputs.tags }} 🚀 | Report at serhiinv.github.io/typescript-playwright
+run-name: Run - ${{ github.event.inputs.tags }} 🚀
 
 
 on:
   workflow_dispatch:
     inputs:
       tags:
-        description: 'Test tags/test name to run'
+        description: 'Select a test suite or test name'
         required: false
         default: '@smoke'
         type: choice
