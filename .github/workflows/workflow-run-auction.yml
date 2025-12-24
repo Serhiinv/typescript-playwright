@@ -1,5 +1,5 @@
 name: Workflow Run Auction
-run-name: Run:/ ${{ github.event.inputs.tags  }}  🚀
+run-name: Run:: ${{ github.event.inputs.tags  }}  🚀
 
 on:
   workflow_dispatch:
