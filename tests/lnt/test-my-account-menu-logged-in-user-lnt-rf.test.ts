@@ -31,7 +31,7 @@ async function clickOnMenu(page: Page, menuName: string): Promise<void> {
 //     await up.open(Users.user_lnt_stg, Users.url_lnt_stg, Users.domain_lnt_stg);
 // });
 
-test('L&T - Test my account menu logged in user @lnt-menu', async ({ page }) => {
+test('L&T - Test my account menu logged in user @L&T-menu', async ({ page }) => {
     await allure.issue("JIRA-test name", "https://jira.test/browse/JIRA-test-name");
     const up = new UserPage(page);
     await up.open(Users.user_lnt, Users.url_lnt, Users.domain_lnt);

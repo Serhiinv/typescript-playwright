@@ -12,9 +12,9 @@ on:
         type: choice
         options:
           - '@smoke'
-          - '@lnt-menu'
-          - '@lnt-strapi'
-          - 'L&T Strapi - Test colour scheme selection on component'
+          - '@L&T-menu'
+          - '@L&T-strapi'
+          - 'L&T strapi - Test colour scheme selection on component'
           - 'L&T - Test my account menu logged in user'
 
 
