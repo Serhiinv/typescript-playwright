@@ -1,5 +1,5 @@
 name: Workflow Run Auction
-run-name: Run - ${{ github.event.inputs.tags }} 🚀 | Report at serhiinv.github.io/typescript-playwright
+run-name: Run - ${{ github.event.inputs.tags }} 🚀
 
 
 on:
