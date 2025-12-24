@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       tags:
-        description: 'Test tags/test name to run'
+        description: 'Select a test suite or test name'
         required: false
         default: '@smoke'
         type: choice
