@@ -16,6 +16,8 @@ on:
           - '@lnt-strapi'
           - 'lnt strapi - Test colour scheme selection on component'
           - 'lnt - Test my account menu logged in user'
+          - 'tests Verify Login Page'
+          - 'tests Verify Create Account Page'
 
 
 permissions:

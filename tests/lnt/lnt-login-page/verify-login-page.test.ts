@@ -4,7 +4,10 @@ import { LNTLoginPage } from "../../../page-object/lnt/lnt-pages/LNTLoginPage";
 import { LNTHomePage } from "../../../page-object/lnt/lnt-pages/LNTHomePage";
 import { LNTHeaderMenuPage } from "../../../page-object/lnt/lnt-pages/LNTHeaderMenuPage";
 
+const runTag = process.env.RUN_TAG || 'all';
+
 test("tests Verify Login Page @smoke", async ({ page }) => {
+    test.skip(runTag !== 'all' && runTag !== '@smoke' && runTag !== 'tests Verify Login Page', 'Not running smoke tests');
 
   await new LNTHomePage(page).open();
   // const headerMenu = new LNTHeaderMenuPage(page);
