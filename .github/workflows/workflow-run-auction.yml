@@ -215,26 +215,69 @@ jobs:
 #            cp -r /tmp/allure-history-backup/* gh-pages/allure-report/history/
 #          fi
 
+#      - name: Copy Allure report to branch
+#        run: |
+#          # Remove old report but preserve history
+#          if [ -d "gh-pages/allure-report" ]; then
+#            echo "Preserving existing history..."
+#            mkdir -p /tmp/allure-history-backup
+#            if [ -d "gh-pages/allure-report/history" ]; then
+#              cp -r gh-pages/allure-report/history/* /tmp/allure-history-backup/
+#            fi
+#            rm -rf gh-pages/allure-report/*
+#          fi
+#
+#          # Copy new report
+#          mkdir -p gh-pages/allure-report
+#          cp -r allure-report/* gh-pages/allure-report/
+#
+#          # The new report already contains merged history from the previous step
+#          # No need to merge again - the history was already restored before report generation
+#          echo "Report copied successfully"
+#          ls -la gh-pages/allure-report/history/ || echo "No history found"
       - name: Copy Allure report to branch
         run: |
-          # Remove old report but preserve history
+          # Remove old report but preserve history and test results
           if [ -d "gh-pages/allure-report" ]; then
-            echo "Preserving existing history..."
-            mkdir -p /tmp/allure-history-backup
+            echo "Preserving existing history and test results..."
+            mkdir -p /tmp/allure-backup
+
+            # Preserve history
             if [ -d "gh-pages/allure-report/history" ]; then
-              cp -r gh-pages/allure-report/history/* /tmp/allure-history-backup/
+              cp -r gh-pages/allure-report/history /tmp/allure-backup/
             fi
+
+            # Preserve all data files (test cases, attachments, etc.)
+            if [ -d "gh-pages/allure-report/data/test-cases" ]; then
+              mkdir -p /tmp/allure-backup/data
+              cp -r gh-pages/allure-report/data/test-cases /tmp/allure-backup/data/
+            fi
+
             rm -rf gh-pages/allure-report/*
           fi
-          
+
           # Copy new report
           mkdir -p gh-pages/allure-report
           cp -r allure-report/* gh-pages/allure-report/
-          
-          # The new report already contains merged history from the previous step
-          # No need to merge again - the history was already restored before report generation
+
+          # Merge old test result files (avoid overwriting new ones)
+          if [ -d "/tmp/allure-backup/data/test-cases" ]; then
+            echo "Merging old test result files..."
+            mkdir -p gh-pages/allure-report/data/test-cases
+            # Copy old files that don't exist in new report
+            find /tmp/allure-backup/data/test-cases -type f | while read -r file; do
+              filename=$(basename "$file")
+              if [ ! -f "gh-pages/allure-report/data/test-cases/$filename" ]; then
+                cp "$file" "gh-pages/allure-report/data/test-cases/"
+              fi
+            done
+            echo "Old test cases merged successfully"
+          fi
+
           echo "Report copied successfully"
           ls -la gh-pages/allure-report/history/ || echo "No history found"
+          echo "Test cases count: $(find gh-pages/allure-report/data/test-cases -type f 2>/dev/null | wc -l)"
+      
 
       - name: Commit and push to gh-pages
         run: |
