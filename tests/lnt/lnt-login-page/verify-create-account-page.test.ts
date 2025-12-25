@@ -3,9 +3,13 @@ import { LNTCreateAccountPage } from "../../../page-object/lnt/lnt-pages/LNTCrea
 import { LNTHomePage } from "../../../page-object/lnt/lnt-pages/LNTHomePage";
 import { LNTHeaderMenuPage } from "../../../page-object/lnt/lnt-pages/LNTHeaderMenuPage";
 
-test("tests Verify Create Account Page @smoke", async ({ page }) => {
+const runTag = process.env.RUN_TAG || 'all';
 
-  await new LNTHomePage(page).open();
+test("tests Verify Create Account Page @smoke", async ({ page }) => {
+    test.skip(runTag !== 'all' && runTag !== '@smoke' && runTag !== 'tests Verify Create Account Page', 'Not running smoke tests');
+
+
+    await new LNTHomePage(page).open();
   // const headerMenu = new LNTHeaderMenuPage(page);
   // await headerMenu.logIn();
   // await headerMenu.createAccount();
