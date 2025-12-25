@@ -194,25 +194,45 @@ jobs:
 #          mkdir -p gh-pages/allure-report
 #          cp -r allure-report/* gh-pages/allure-report/
 
+#      - name: Copy Allure report to branch
+#        run: |
+#          # Preserve existing history before copying new report
+#          if [ -d "gh-pages/allure-report/history" ]; then
+#            echo "Backing up existing history..."
+#            mkdir -p /tmp/allure-history-backup
+#            cp -r gh-pages/allure-report/history/* /tmp/allure-history-backup/
+#          fi
+#
+#          # Copy new report
+#          mkdir -p gh-pages/allure-report
+#          cp -r allure-report/* gh-pages/allure-report/
+#
+#          # Merge histories if backup exists
+#          if [ -d "/tmp/allure-history-backup" ]; then
+#            echo "Merging histories..."
+#            cp -r /tmp/allure-history-backup/* gh-pages/allure-report/history/
+#          fi
+
       - name: Copy Allure report to branch
         run: |
-          # Preserve existing history before copying new report
-          if [ -d "gh-pages/allure-report/history" ]; then
-            echo "Backing up existing history..."
+          # Remove old report but preserve history
+          if [ -d "gh-pages/allure-report" ]; then
+            echo "Preserving existing history..."
             mkdir -p /tmp/allure-history-backup
-            cp -r gh-pages/allure-report/history/* /tmp/allure-history-backup/
+            if [ -d "gh-pages/allure-report/history" ]; then
+              cp -r gh-pages/allure-report/history/* /tmp/allure-history-backup/
+            fi
+            rm -rf gh-pages/allure-report/*
           fi
           
           # Copy new report
           mkdir -p gh-pages/allure-report
           cp -r allure-report/* gh-pages/allure-report/
           
-          # Merge histories if backup exists
-          if [ -d "/tmp/allure-history-backup" ]; then
-            echo "Merging histories..."
-            cp -r /tmp/allure-history-backup/* gh-pages/allure-report/history/
-          fi
-      
+          # The new report already contains merged history from the previous step
+          # No need to merge again - the history was already restored before report generation
+          echo "Report copied successfully"
+          ls -la gh-pages/allure-report/history/ || echo "No history found"
 
       - name: Commit and push to gh-pages
         run: |
