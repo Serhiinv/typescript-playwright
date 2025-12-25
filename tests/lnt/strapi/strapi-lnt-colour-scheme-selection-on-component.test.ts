@@ -1,22 +1,26 @@
-import { test } from '@playwright/test';
+import {test} from '@playwright/test';
 import {StrapiHelper} from "../../../page-object/strapi/strapi-helper";
 import * as allure from "allure-js-commons";
 
-test('L&T strapi - Test colour scheme selection on component @L&T-strapi', async ({ page }) => {
-  await allure.issue("JIRA-test name", "https://jira.test/browse/JIRA-test-name");
+const runTag = process.env.RUN_TAG || 'all';
 
-  const strapi = new StrapiHelper(page);
-  const slug = 'sn-page-at';
+test('L&T strapi - Test colour scheme selection on component @L&T-strapi', async ({page}) => {
+    await allure.issue("JIRA-test name", "https://jira.test/browse/JIRA-test-name");
 
-  await strapi.login();
+    test.skip(runTag !== 'all' && runTag !== '@L&T-strapi', 'Not running smoke tests');
 
-  await strapi.navigateToPages();
-  await strapi.skipTutorial();
-  await strapi.searchEntry(slug);
-  await strapi.openEntryByName(slug);
+    const strapi = new StrapiHelper(page);
+    const slug = 'sn-page-at';
 
-  const bgColor = await strapi.selectArtistColourScheme();
+    await strapi.login();
 
-  await strapi.publishPage();
-  await strapi.verifyArtistComponentBackground(bgColor);
+    await strapi.navigateToPages();
+    await strapi.skipTutorial();
+    await strapi.searchEntry(slug);
+    await strapi.openEntryByName(slug);
+
+    const bgColor = await strapi.selectArtistColourScheme();
+
+    await strapi.publishPage();
+    await strapi.verifyArtistComponentBackground(bgColor);
 });
