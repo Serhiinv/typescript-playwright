@@ -23,7 +23,6 @@ export default defineConfig({
         detail: true,
         outputFolder: 'allure-results',
         suiteTitle: false,
-        skipTestsWithoutResult: false
       }]
     ],
     // reporter: [["line"], ["allure-playwright"]],
