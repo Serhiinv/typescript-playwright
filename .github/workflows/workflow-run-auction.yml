@@ -14,7 +14,7 @@ on:
           - '@smoke'
           - '@lnt-menu'
           - '@lnt-strapi'
-          - 'lnt strapi - Test colour scheme selection on component'
+          - 'lnt strapi - Test colour scheme selection'
           - 'lnt - Test my account menu logged in user'
           - 'tests Verify Login Page'
           - 'tests Verify Create Account Page'

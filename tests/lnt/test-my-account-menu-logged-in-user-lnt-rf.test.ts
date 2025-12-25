@@ -33,11 +33,9 @@ async function clickOnMenu(page: Page, menuName: string): Promise<void> {
 const runTag = process.env.RUN_TAG || 'all';
 
 test('lnt - Test my account menu logged in user @lnt-menu', async ({ page }) => {
-    test.skip(runTag !== 'all' && runTag !== '@lnt-menu' && runTag !== 'lnt - Test my account menu logged in user', 'Not running smoke tests');
-
-    // test.skip(runTag !== 'all' && runTag !== '@lnt-menu', 'Not running smoke tests');
-
+    test.skip(runTag !== 'all' && runTag !== '@lnt-menu' && runTag !== 'lnt - Test my account menu logged in user', 'Not runed');
     await allure.issue("JIRA-test name", "https://jira.test/browse/JIRA-test-name");
+
     const up = new UserPage(page);
     await up.open(Users.user_lnt, Users.url_lnt, Users.domain_lnt);
 

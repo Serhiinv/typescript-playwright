@@ -6,7 +6,7 @@ import { LNTHeaderMenuPage } from "../../../page-object/lnt/lnt-pages/LNTHeaderM
 const runTag = process.env.RUN_TAG || 'all';
 
 test("tests Verify Create Account Page @smoke", async ({ page }) => {
-    test.skip(runTag !== 'all' && runTag !== '@smoke' && runTag !== 'tests Verify Create Account Page', 'Not running smoke tests');
+    test.skip(runTag !== 'all' && runTag !== '@smoke' && runTag !== 'tests Verify Create Account Page', 'Not runed');
 
 
     await new LNTHomePage(page).open();
