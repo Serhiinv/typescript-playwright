@@ -12,10 +12,10 @@ on:
         type: choice
         options:
           - '@smoke'
-          - '@L&T-menu'
-          - '@L&T-strapi'
-          - 'L&T strapi - Test colour scheme selection on component'
-          - 'L&T - Test my account menu logged in user'
+          - '@lnt-menu'
+          - '@lnt-strapi'
+          - 'lnt strapi - Test colour scheme selection on component'
+          - 'lnt - Test my account menu logged in user'
 
 
 permissions:
