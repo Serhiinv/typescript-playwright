@@ -4,10 +4,10 @@ import * as allure from "allure-js-commons";
 
 const runTag = process.env.RUN_TAG || 'all';
 
-test('L&T strapi - Test colour scheme selection on component @L&T-strapi', async ({page}) => {
+test('lnt strapi - Test colour scheme selection on component @lnt-strapi', async ({page}) => {
     await allure.issue("JIRA-test name", "https://jira.test/browse/JIRA-test-name");
 
-    test.skip(runTag !== 'all' && runTag !== '@L&T-strapi', 'Not running smoke tests');
+    test.skip(runTag !== 'all' && runTag !== '@lnt-strapi', 'Not running smoke tests');
 
     const strapi = new StrapiHelper(page);
     const slug = 'sn-page-at';
