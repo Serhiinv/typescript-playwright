@@ -70,9 +70,6 @@ jobs:
           RUN_TAG: ${{ github.event.inputs.tags }}
         run: npx playwright test --project=chromium
 
-        #        run: npx playwright test --project=chromium --grep @smoke
-#        run: npx playwright test --project=chromium --grep "${{ github.event.inputs.tags }}"
-
       - name: Create executor and environment info for Allure
         if: always()
         run: |
@@ -121,35 +118,6 @@ jobs:
             echo "No previous Allure history found - starting fresh"
           fi
 
-#      - name: Install jq
-#        if: always()
-#        run: sudo apt-get update && sudo apt-get install -y jq
-
-#      - name: Restore previous Allure history if exists
-#        if: always()
-#        run: |
-#          if [ -d "gh-pages-temp/allure-report/history" ]; then
-#            echo "Restoring previous Allure history..."
-#            mkdir -p allure-results/history
-#
-#            # Keep only the last 10 runs in history
-#            if [ -f "gh-pages-temp/allure-report/history/history.json" ]; then
-#              jq 'if length > 10 then .[-10:] else . end' \
-#                gh-pages-temp/allure-report/history/history.json > \
-#                allure-results/history/history.json
-#            fi
-#
-#            if [ -f "gh-pages-temp/allure-report/history/history-trend.json" ]; then
-#              jq 'if length > 10 then .[-10:] else . end' \
-#                gh-pages-temp/allure-report/history/history-trend.json > \
-#                allure-results/history/history-trend.json
-#            fi
-#
-#            echo "Limited history to last 10 runs"
-#          else
-#            echo "No previous Allure history found"
-#          fi
-
       - name: Generate Allure Report with History
         if: always()
         run: |
@@ -191,50 +159,6 @@ jobs:
           name: allure-report
           path: allure-report
 
-#      - name: Copy Allure report to branch
-#        run: |
-#          mkdir -p gh-pages/allure-report
-#          cp -r allure-report/* gh-pages/allure-report/
-
-#      - name: Copy Allure report to branch
-#        run: |
-#          # Preserve existing history before copying new report
-#          if [ -d "gh-pages/allure-report/history" ]; then
-#            echo "Backing up existing history..."
-#            mkdir -p /tmp/allure-history-backup
-#            cp -r gh-pages/allure-report/history/* /tmp/allure-history-backup/
-#          fi
-#
-#          # Copy new report
-#          mkdir -p gh-pages/allure-report
-#          cp -r allure-report/* gh-pages/allure-report/
-#
-#          # Merge histories if backup exists
-#          if [ -d "/tmp/allure-history-backup" ]; then
-#            echo "Merging histories..."
-#            cp -r /tmp/allure-history-backup/* gh-pages/allure-report/history/
-#          fi
-
-#      - name: Copy Allure report to branch
-#        run: |
-#          # Remove old report but preserve history
-#          if [ -d "gh-pages/allure-report" ]; then
-#            echo "Preserving existing history..."
-#            mkdir -p /tmp/allure-history-backup
-#            if [ -d "gh-pages/allure-report/history" ]; then
-#              cp -r gh-pages/allure-report/history/* /tmp/allure-history-backup/
-#            fi
-#            rm -rf gh-pages/allure-report/*
-#          fi
-#
-#          # Copy new report
-#          mkdir -p gh-pages/allure-report
-#          cp -r allure-report/* gh-pages/allure-report/
-#
-#          # The new report already contains merged history from the previous step
-#          # No need to merge again - the history was already restored before report generation
-#          echo "Report copied successfully"
-#          ls -la gh-pages/allure-report/history/ || echo "No history found"
       - name: Copy Allure report to branch
         run: |
           # Remove old report but preserve history and test results
