@@ -66,6 +66,7 @@ jobs:
           STRAPI_PASSWORD: ${{ secrets.STRAPI_PASSWORD }}
           USER_LNT_ID: ${{ secrets.USER_LNT_ID }}
           RUN_TAG: ${{ github.event.inputs.tags }}
+        run: npx playwright test --project=chromium
 
         #        run: npx playwright test --project=chromium --grep @smoke
 #        run: npx playwright test --project=chromium --grep "${{ github.event.inputs.tags }}"
