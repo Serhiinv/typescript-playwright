@@ -5,6 +5,16 @@ run-name: Run - ${{ github.event.inputs.tags }} 🚀
 on:
   workflow_dispatch:
     inputs:
+      environment:
+        description: 'Select environment'
+        required: true
+        default: 'lnt_staging'
+        type: choice
+        options:
+          - lnt_staging
+          - lnt_production
+          - sgb_staging
+          - sgb_production
       tags:
         description: 'Select a test suite or test name'
         required: false
@@ -68,6 +78,7 @@ jobs:
           STRAPI_PASSWORD: ${{ secrets.STRAPI_PASSWORD }}
           USER_LNT_ID: ${{ secrets.USER_LNT_ID }}
           RUN_TAG: ${{ github.event.inputs.tags }}
+          TEST_ENV: ${{ github.event.inputs.environment }}
         run: npx playwright test --project=chromium
 
       - name: Create executor and environment info for Allure
