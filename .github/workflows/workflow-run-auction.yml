@@ -1,5 +1,5 @@
 name: Workflow Run - Auction
-run-name: Run - ${{ github.event.inputs.tags }} 🚀
+run-name: Run - env.${{ github.event.inputs.environment }} - ${{ github.event.inputs.tags }} 🚀
 
 
 on:
@@ -8,13 +8,13 @@ on:
       environment:
         description: 'Select environment'
         required: true
-        default: 'lnt_staging'
+        default: 'lnt_stg'
         type: choice
         options:
-          - lnt_staging
-          - lnt_production
-          - sgb_staging
-          - sgb_production
+          - lnt_stg
+          - lnt_prod
+          - sgb_stg
+          - sgb_prod
       tags:
         description: 'Select a test suite or test name'
         required: false

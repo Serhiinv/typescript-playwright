@@ -32,22 +32,22 @@
 
 
 export const users = {
-    lnt_staging: {
+    lnt_stg: {
         user: process.env.USER_LNT_STG_ID || '',
         url: 'https://staging-lyonandturnbull.auctionfusion.com/',
         domain: 'staging-lyonandturnbull.auctionfusion.com/',
     },
-    lnt_production: {
+    lnt_prod: {
         user: process.env.USER_LNT_ID || '',
         url: 'https://www.lyonandturnbull.com',
         domain: 'www.lyonandturnbull.com',
     },
-    sgb_staging: {
+    sgb_stg: {
         user: process.env.USER_SGB_STG_ID || '',
         url: 'https://staging-stanleygibbonsbaldwins.auctionfusion.com/',
         domain: 'staging-stanleygibbonsbaldwins.auctionfusion.com/',
     },
-    sgb_production: {
+    sgb_prod: {
         user: process.env.USER_SGB_ID || '',
         url: 'https://www.lyonandturnbull.com',
         domain: 'www.lyonandturnbull.com',
@@ -58,7 +58,7 @@ export const users = {
     },
 };
 
-const environment = (process.env.TEST_ENV || 'lnt_staging') as 'lnt_staging' | 'lnt_production' | 'sgb_staging' | 'sgb_production';
+const environment = (process.env.TEST_ENV || 'lnt_stg') as 'lnt_stg' | 'lnt_prod' | 'sgb_stg' | 'sgb_prod';
 export const currentUser = users[environment];
 
 
