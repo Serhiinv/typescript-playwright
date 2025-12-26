@@ -1,5 +1,8 @@
 name: Workflow Run - Auction
 run-name: Env.${{ github.event.inputs.environment }} / ${{ github.event.inputs.tags }} 🚀
+  
+  Env.lnt_prod   lnt - Test my account menu logged in user 🚀
+
 
 on:
   workflow_dispatch:
