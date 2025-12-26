@@ -1,9 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
 import { UserPage } from '../../page-object/lnt/user-page';
-// import {currentUser, Users} from '../../page-object/users';
 import {currentUser} from '../../page-object/users';
 import * as allure from 'allure-js-commons';
-
 
 
 async function verifyPage(page: Page): Promise<void> {
@@ -26,11 +24,6 @@ async function clickOnMenu(page: Page, menuName: string): Promise<void> {
     await page.getByRole("link", { name: menuName }).first().click();
 }
 
-// Run on staging
-// test('test my account menu logged in user - staging', async ({ page }) => {
-//     const up = new UserPage(page);
-//     await up.open(Users.user_lnt_stg, Users.url_lnt_stg, Users.domain_lnt_stg);
-// });
 const runTag = process.env.RUN_TAG || 'all';
 
 test('lnt - Test my account menu logged in user @lnt-menu', async ({ page }) => {
@@ -38,17 +31,14 @@ test('lnt - Test my account menu logged in user @lnt-menu', async ({ page }) => 
     await allure.issue("JIRA-test name", "https://jira.test/browse/JIRA-test-name");
 
     const up = new UserPage(page);
-    // await up.open(Users.user_lnt, Users.url_lnt, Users.domain_lnt);
     await up.open(currentUser.user, currentUser.url, currentUser.domain);
 
     const menuItems = ['Buying', 'Selling', 'Favourites', 'Lot alerts', 'Following', 'Profile'];
 
-    // First pass: open menu and verify logged in
     await test.step('Verify user is logged in', async () => {
         await openUserMenu(page);
         await verifyUserLoggedIn(page);
     });
-
 
     await test.step('Verify user menu on top right', async () => {
         for (const item of menuItems) {
@@ -73,5 +63,4 @@ test('lnt - Test my account menu logged in user @lnt-menu', async ({ page }) => 
             });
         }
     });
-
 });
