@@ -1,5 +1,5 @@
 name: Workflow Run - Auction
-run-name: Env.${{ github.event.inputs.environment }}; (${{ github.event.inputs.tags }}) 🚀
+run-name: Env.${{ github.event.inputs.environment }} (${{ github.event.inputs.tags }}) 🚀
 
 on:
   workflow_dispatch:
@@ -16,7 +16,7 @@ on:
           - sgb_prod
       tags:
         description: 'Select a test suite or test name'
-        required: false
+        required: true
         default: '@smoke'
         type: choice
         options:
