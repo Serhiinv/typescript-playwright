@@ -1,5 +1,5 @@
 name: Workflow Run - Auction
-run-name: Env.${{ github.event.inputs.environment }}   ${{ github.event.inputs.tags }} 🚀
+run-name: Env.${{ github.event.inputs.environment }}; (${{ github.event.inputs.tags }}) 🚀
 
 on:
   workflow_dispatch:
