@@ -1,6 +1,7 @@
 import { test, expect, Page } from '@playwright/test';
 import { UserPage } from '../../page-object/lnt/user-page';
-import { Users } from '../../page-object/users';
+// import {currentUser, Users} from '../../page-object/users';
+import {currentUser} from '../../page-object/users';
 import * as allure from 'allure-js-commons';
 
 
@@ -37,7 +38,8 @@ test('lnt - Test my account menu logged in user @lnt-menu', async ({ page }) => 
     await allure.issue("JIRA-test name", "https://jira.test/browse/JIRA-test-name");
 
     const up = new UserPage(page);
-    await up.open(Users.user_lnt, Users.url_lnt, Users.domain_lnt);
+    // await up.open(Users.user_lnt, Users.url_lnt, Users.domain_lnt);
+    await up.open(currentUser.user, currentUser.url, currentUser.domain);
 
     const menuItems = ['Buying', 'Selling', 'Favourites', 'Lot alerts', 'Following', 'Profile'];
 
