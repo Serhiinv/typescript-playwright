@@ -6,19 +6,10 @@ import {LNTHeaderMenuPage} from "../../../page-object/lnt/lnt-pages/LNTHeaderMen
 import * as allure from "allure-js-commons";
 
 const runTag = process.env.RUN_TAG || 'all';
-const testEnv = process.env.TEST_ENV || 'Local';
 
 test('tests Verify Login Page @smoke', async ({page}) => {
     test.skip(runTag !== 'all' && runTag !== '@smoke' && runTag !== 'tests Verify Login Page', 'Not runed');
     await allure.tag(`Environment: ${process.env.TEST_ENV || 'Local'}`)
-    await allure.displayName(`tests Verify Login Page [${testEnv}]`);
-
-// test(`${testName} @smoke`, async ({page}) => {
-//     test.skip(runTag !== 'all' && runTag !== '@smoke' && runTag !== `${testName}`, 'Not runed');
-//     await allure.tag(`Environment: ${process.env.TEST_ENV || 'Local'}`)
-//     await allure.historyId(`${testName}`)
-//     await allure.parameter('Environment', process.env.TEST_ENV || 'Local')
-
 
     await new LNTHomePage(page).open();
     // const headerMenu = new LNTHeaderMenuPage(page);
