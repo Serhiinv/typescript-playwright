@@ -3,11 +3,14 @@ import { LNTCreateAccountPage } from "../../../page-object/lnt/lnt-pages/LNTCrea
 import { LNTLoginPage } from "../../../page-object/lnt/lnt-pages/LNTLoginPage";
 import { LNTHomePage } from "../../../page-object/lnt/lnt-pages/LNTHomePage";
 import { LNTHeaderMenuPage } from "../../../page-object/lnt/lnt-pages/LNTHeaderMenuPage";
+import * as allure from "allure-js-commons";
 
 const runTag = process.env.RUN_TAG || 'all';
 
-test(`${process.env.TEST_ENV || 'Local'} tests Verify Login Page @smoke`, async ({ page }) => {
+test('tests Verify Login Page @smoke', async ({ page }) => {
   test.skip(runTag !== 'all' && runTag !== '@smoke' && runTag !== 'tests Verify Login Page', 'Not runed');
+    await allure.description(`Environment: ${process.env.TEST_ENV || 'Local'}`);
+    await allure.tag(`Environment: ${process.env.TEST_ENV || 'Local'}`)
 
   await new LNTHomePage(page).open();
   // const headerMenu = new LNTHeaderMenuPage(page);
