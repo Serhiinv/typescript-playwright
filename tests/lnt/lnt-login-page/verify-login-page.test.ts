@@ -6,13 +6,11 @@ import {LNTHeaderMenuPage} from "../../../page-object/lnt/lnt-pages/LNTHeaderMen
 import * as allure from "allure-js-commons";
 
 const runTag = process.env.RUN_TAG || 'all';
-// const testName = 'tests Verify Login Page';
 
 test('tests Verify Login Page @smoke', async ({page}) => {
     test.skip(runTag !== 'all' && runTag !== '@smoke' && runTag !== 'tests Verify Login Page', 'Not runed');
     await allure.tag(`Environment: ${process.env.TEST_ENV || 'Local'}`)
-    await allure.label('environment', process.env.TEST_ENV || 'Local')
-    await allure.historyId('tests Verify Login Page')
+    await allure.displayName(`tests Verify Login Page [${testEnv}]`);
 
 // test(`${testName} @smoke`, async ({page}) => {
 //     test.skip(runTag !== 'all' && runTag !== '@smoke' && runTag !== `${testName}`, 'Not runed');
