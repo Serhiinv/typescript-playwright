@@ -11,8 +11,8 @@ const runTag = process.env.RUN_TAG || 'all';
 test('tests Verify Login Page @smoke', async ({page}) => {
     test.skip(runTag !== 'all' && runTag !== '@smoke' && runTag !== 'tests Verify Login Page', 'Not runed');
     await allure.tag(`Environment: ${process.env.TEST_ENV || 'Local'}`)
-    await allure.historyId('lnt-login-page-verify')
-    await allure.parameter('Environment', process.env.TEST_ENV || 'Local')
+    await allure.label('environment', process.env.TEST_ENV || 'Local')
+    await allure.historyId('tests Verify Login Page')
 
 // test(`${testName} @smoke`, async ({page}) => {
 //     test.skip(runTag !== 'all' && runTag !== '@smoke' && runTag !== `${testName}`, 'Not runed');
