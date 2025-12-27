@@ -154,29 +154,25 @@ jobs:
 
               try {
                   const data = JSON.parse(content);
-                  console.log('History file structure:', JSON.stringify(data, null, 2));
 
-                  if (data && Array.isArray(data.items)) {
-                      data.items = data.items.map(item => ({
-                          ...item,
-                          name: `${item.name} ${env}`
-                      }));
+                  if (Array.isArray(data)) {
+                      // Modify the most recent build's reportName
+                      data.forEach((item, index) => {
+                          if (index === 0) { // Only modify the latest build
+                              item.reportName = `${item.reportName} [${env}]`;
+                          }
+                      });
 
                       fs.writeFileSync(historyFile, JSON.stringify(data, null, 2));
                       console.log(`Added environment tag '${env}' to history timeline`);
                   } else {
-                      console.log('No items array found in history file');
+                      console.log('Unexpected history file structure');
                   }
               } catch (error) {
                   console.log('Error processing history file:', error.message);
               }
           } else {
               console.log('History file not found at:', historyFile);
-              console.log('Checking widgets directory:');
-              const widgetsDir = path.join(reportDir, 'widgets');
-              if (fs.existsSync(widgetsDir)) {
-                  console.log('Files in widgets:', fs.readdirSync(widgetsDir));
-              }
           }
           EOF
 
