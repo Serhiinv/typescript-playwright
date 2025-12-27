@@ -23,6 +23,10 @@ export default defineConfig({
         detail: true,
         outputFolder: 'allure-results',
         suiteTitle: false,
+        environmentInfo: {
+          'Test Environment': process.env.TEST_ENV || 'lnt_stg',
+          'Browser': 'Chromium',
+        },
       }]
     ],
     // reporter: [["line"], ["allure-playwright"]],
