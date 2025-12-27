@@ -138,48 +138,6 @@ jobs:
           echo "Checking if history was generated:"
           ls -la allure-report/history/ || echo "No history directory found"
 
-      - name: Add environment to history timeline
-        if: always()
-        run: |
-          cat > add-env-to-history.js << 'EOF'
-          const fs = require('fs');
-          const path = require('path');
-
-          const reportDir = path.join(process.cwd(), 'allure-report');
-          const historyFile = path.join(reportDir, 'widgets', 'history-trend.json');
-
-          if (fs.existsSync(historyFile)) {
-              const env = process.env.TEST_ENV || 'Local';
-              let content = fs.readFileSync(historyFile, 'utf-8');
-
-              try {
-                  const data = JSON.parse(content);
-
-                  if (Array.isArray(data)) {
-                      // Modify the most recent build's reportName
-                      data.forEach((item, index) => {
-                          if (index === 0) { // Only modify the latest build
-                              item.reportName = `${item.reportName} [${env}]`;
-                          }
-                      });
-
-                      fs.writeFileSync(historyFile, JSON.stringify(data, null, 2));
-                      console.log(`Added environment tag '${env}' to history timeline`);
-                  } else {
-                      console.log('Unexpected history file structure');
-                  }
-              } catch (error) {
-                  console.log('Error processing history file:', error.message);
-              }
-          } else {
-              console.log('History file not found at:', historyFile);
-          }
-          EOF
-
-          node add-env-to-history.js
-          rm add-env-to-history.js
-      
-
       - name: Upload Allure Report artifact
         if: always()
         uses: actions/upload-artifact@v4
