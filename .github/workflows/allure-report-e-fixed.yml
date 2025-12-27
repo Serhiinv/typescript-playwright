@@ -1,98 +1,109 @@
-name: Allure Report
-run-name: ${{ github.actor }} is creating Allure report 🚀
-
-on:
-  workflow_dispatch:
-    inputs:
-      tags:
-        description: 'Test tags to run (e.g., @smoke, @menu-main)'
-        required: false
-        default: '@smoke'
-        type: choice
-        options:
-          - '@smoke'
-          - '@lnt-menu-main'
-          - '@lnt-menu-logged'
-
-permissions:
-  contents: write
-
-jobs:
-  autotests:
-    name: Run tests and generate Allure Report
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v4.2.2
-
-      - name: Set up Node 20
-        uses: actions/setup-node@v4.1.0
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test
-        continue-on-error: true
-
-      - name: Checkout gh-pages for history
-        uses: actions/checkout@v4.2.2
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages-temp
-
-      - name: Restore Allure history
-        if: always()
-        run: |
-          if [ -d "gh-pages-temp/history" ]; then
-            cp -r gh-pages-temp/history ./out/allure-results/
-          fi
-
-      - name: Generate Allure Report
-        uses: simple-elf/allure-report-action@v1.11
-        if: always()
-        with:
-          allure_results: ./out/allure-results
-          allure_history: allure-history
-
-#          Or use one of more actively maintained action:
-#      - name: Generate Allure Report
-#        uses: simple-elf/allure-report-action@master
-#        if: always()
-#        with:
-#          allure_results: ./out/allure-results
-#          allure_history: allure-history
-
-#          or
-#      - name: Generate Allure Report
-#        uses: JamesIves/github-pages-deploy-action@v4
-#        if: always()
-#        with:
-#          folder: allure-report
-#          clean: true
-
-#        Use the official Allure CLI directly:
-#      - name: Install Allure CLI
-#        if: always()
-#        run: |
-#          wget https://github.com/allure-framework/allure2/releases/download/2.32.0/allure-2.32.0.tgz
-#          tar -zxvf allure-2.32.0.tgz
-#          sudo mv allure-2.32.0 /opt/allure
-#          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+#name: Allure Report
+#run-name: ${{ github.actor }} is creating Allure report 🚀
 #
-#      - name: Generate Allure Report
+#on:
+#  workflow_dispatch:
+#    inputs:
+#      tags:
+#        description: 'Test tags to run (e.g., @smoke, @menu-main)'
+#        required: false
+#        default: '@smoke'
+#        type: choice
+#        options:
+#          - '@smoke'
+#          - '@lnt-menu-main'
+#          - '@lnt-menu-logged'
+#
+#permissions:
+#  contents: write
+#
+#jobs:
+#  autotests:
+#    name: Run tests and generate Allure Report
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Clone repository
+#        uses: actions/checkout@v4.2.2
+#
+#      - name: Set up Node 20
+#        uses: actions/setup-node@v4.1.0
+#        with:
+#          node-version: 20
+#          cache: npm
+#
+#      - name: Install dependencies
+#        run: npm install
+#
+#      - name: Run tests
+#        run: npm test
+#        continue-on-error: true
+#
+#      - name: Checkout gh-pages for history
+#        uses: actions/checkout@v4.2.2
+#        if: always()
+#        continue-on-error: true
+#        with:
+#          ref: gh-pages
+#          path: gh-pages-temp
+#
+#      - name: Restore Allure history
 #        if: always()
 #        run: |
 #          if [ -d "gh-pages-temp/history" ]; then
 #            cp -r gh-pages-temp/history ./out/allure-results/
 #          fi
-#          allure generate ./out/allure-results -o allure-report --clean
+#
+#      - name: Generate Allure Report
+#        uses: simple-elf/allure-report-action@v1.11
+#        if: always()
+#        with:
+#          allure_results: ./out/allure-results
+#          allure_history: allure-history
+#
+##          Or use one of more actively maintained action:
+##      - name: Generate Allure Report
+##        uses: simple-elf/allure-report-action@master
+##        if: always()
+##        with:
+##          allure_results: ./out/allure-results
+##          allure_history: allure-history
+#
+##          or
+##      - name: Generate Allure Report
+##        uses: JamesIves/github-pages-deploy-action@v4
+##        if: always()
+##        with:
+##          folder: allure-report
+##          clean: true
+#
+##        Use the official Allure CLI directly:
+##      - name: Install Allure CLI
+##        if: always()
+##        run: |
+##          wget https://github.com/allure-framework/allure2/releases/download/2.32.0/allure-2.32.0.tgz
+##          tar -zxvf allure-2.32.0.tgz
+##          sudo mv allure-2.32.0 /opt/allure
+##          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+##
+##      - name: Generate Allure Report
+##        if: always()
+##        run: |
+##          if [ -d "gh-pages-temp/history" ]; then
+##            cp -r gh-pages-temp/history ./out/allure-results/
+##          fi
+##          allure generate ./out/allure-results -o allure-report --clean
+##
+##      - name: Deploy to GitHub Pages
+##        if: always()
+##        uses: peaceiris/actions-gh-pages@v4.0.0
+##        with:
+##          github_token: ${{ secrets.GITHUB_TOKEN }}
+##          publish_branch: gh-pages
+##          publish_dir: allure-report
+#
+#
+#
 #
 #      - name: Deploy to GitHub Pages
 #        if: always()
@@ -100,15 +111,4 @@ jobs:
 #        with:
 #          github_token: ${{ secrets.GITHUB_TOKEN }}
 #          publish_branch: gh-pages
-#          publish_dir: allure-report
-
-
-
-
-      - name: Deploy to GitHub Pages
-        if: always()
-        uses: peaceiris/actions-gh-pages@v4.0.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: allure-history
+#          publish_dir: allure-history
