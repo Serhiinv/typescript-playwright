@@ -9,8 +9,7 @@ const runTag = process.env.RUN_TAG || 'all';
 
 test('tests Verify Login Page @smoke', async ({ page }) => {
   test.skip(runTag !== 'all' && runTag !== '@smoke' && runTag !== 'tests Verify Login Page', 'Not runed');
-    await allure.description(`Environment: ${process.env.TEST_ENV || 'Local'}`);
-    await allure.tag(`Environment: ${process.env.TEST_ENV || 'Local'}`)
+  await allure.tag(`Environment: ${process.env.TEST_ENV || 'Local'}`)
 
   await new LNTHomePage(page).open();
   // const headerMenu = new LNTHeaderMenuPage(page);
